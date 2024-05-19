@@ -6,6 +6,7 @@
 /linux/**
 /macos/**
 .VsCodeCounter/**
+**/.env
 
 # Miscellaneous
 *.class

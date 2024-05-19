@@ -147,5 +147,7 @@
     "prompt_CreatedCourse": "Created course.",
     "prompt_SavedExcel": "Saved Excel to the Download folder.",
     "prompt_CannotSaveExcel": "Cannot save Excel: it may already be opened",
-    "prompt_InsufficientAssignmentList": "Cannot publish scores: the amount of assignments are not sufficient."
+    "prompt_InsufficientAssignmentList": "Cannot publish scores: the amount of assignments are not sufficient.",
+    "prompt_SessionExpired": "Your session has expired, please log in again.",
+    "prompt_ServerFailure": "There is a problem with our server, please report this problem to an admin."
 }

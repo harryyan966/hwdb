@@ -54,11 +54,38 @@ class AppView extends StatelessWidget {
         return true;
       }
 
+      if (error is NetworkFailure) {
+        showSimpleDialog(
+          rootNavigatorKey.currentContext!,
+          dismissible: false,
+          title: l10n.prompt_NetworkError,
+          content: ElevatedButton(
+            onPressed: () => rootNavigatorKey.currentContext!.nav.jump(LoginPage.route()),
+            child: Text(l10n.buttonLabel_Ok),
+          ),
+        );
+        return true;
+      }
+
       // SHOW DIALOG IF SESSION EXPIRED
       if (error is SessionExpiredFailure) {
         showSimpleDialog(
-          context,
-          title: 'SESSION EXPIRED',
+          rootNavigatorKey.currentContext!,
+          dismissible: false,
+          title: l10n.prompt_SessionExpired,
+          content: ElevatedButton(
+            onPressed: () => rootNavigatorKey.currentContext!.nav.jump(LoginPage.route()),
+            child: Text(l10n.buttonLabel_Ok),
+          ),
+        );
+        return true;
+      }
+
+      // SHOW DIALOG IF SERVER FAILED
+      if (error is ServerFailure) {
+        showSimpleDialog(
+          rootNavigatorKey.currentContext!,
+          title: l10n.prompt_ServerFailure,
           content: ElevatedButton(
             onPressed: () => rootNavigatorKey.currentContext!.nav.jump(LoginPage.route()),
             child: Text(l10n.buttonLabel_Ok),

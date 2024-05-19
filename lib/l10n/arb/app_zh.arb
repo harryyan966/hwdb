@@ -148,5 +148,7 @@
     "prompt_CreatedCourse": "成功创建课程",
     "prompt_SavedExcel": "Excel已保存至默认下载文件夹",
     "prompt_CannotSaveExcel": "无法保存Excel：请尝试关闭文件",
-    "prompt_InsufficientAssignmentList": "无法提交最终成绩: 任务数量不足"
+    "prompt_InsufficientAssignmentList": "无法提交最终成绩: 任务数量不足",
+    "prompt_SessionExpired": "登录过期，请重新登录",
+    "prompt_ServerFailure": "服务器出现问题，请与管理员联系"
 }

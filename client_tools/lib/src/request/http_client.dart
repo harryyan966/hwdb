@@ -10,6 +10,8 @@ class SessionExpiredFailure implements Exception {}
 
 class NetworkFailure implements Exception {}
 
+class ServerFailure implements Exception {}
+
 // TODO: how to make file Map<String, file>
 
 class HwdbHttpClient {
@@ -123,7 +125,7 @@ class HwdbHttpClient {
       _logResponseIfDebug(query, response);
       return response;
     }
-    
+
     // IF THE NETWORK FAILED
     on SocketException {
       throw NetworkFailure();
@@ -142,6 +144,7 @@ class HwdbHttpClient {
       return switch (response.body) {
         'Internal Server Error' => {'error': Errors.unknown.toJson()},
         'Not Found' => {'error': Errors.notFound.toJson()},
+        'Route not found' => throw ServerFailure(),
         _ => {'error': response.body},
       };
     }

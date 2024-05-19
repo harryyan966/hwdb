@@ -5,9 +5,11 @@ void showSimpleDialog(
   BuildContext context, {
   required String title,
   Widget? content,
+  bool dismissible = true,
 }) {
   showDialog(
     context: context,
+    barrierDismissible: dismissible,
     builder: (context) => Dialog(
       child: Padding(
         padding: const EdgeInsets.all(Spacing.xxl),
