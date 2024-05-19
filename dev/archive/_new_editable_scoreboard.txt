@@ -1,0 +1,240 @@
+import 'package:client_tools/client_tools.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hw_dashboard/l10n/l10n.dart';
+import 'package:hw_dashboard/score_board/score_board.dart';
+import 'package:hw_dashboard/student_score/student_score.dart';
+import 'package:table_sticky_headers/table_sticky_headers.dart';
+
+class EditableScoreBoard extends StatefulWidget {
+  const EditableScoreBoard({super.key});
+
+  @override
+  State<EditableScoreBoard> createState() => _EditableScoreBoardState();
+}
+
+class _EditableScoreBoardState extends State<EditableScoreBoard> {
+  final _cellInputController = TextEditingController();
+  final _focusNode = FocusNode();
+  int? editedStudentInd;
+  int? editedAssignmentInd;
+
+  @override
+  void initState() {
+    _focusNode.addListener(_onFocused);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _focusNode.removeListener(_onFocused);
+
+    _cellInputController.dispose();
+    _focusNode.dispose();
+
+    super.dispose();
+  }
+
+  void _onFocused() {
+    print('FOCUSEDDD');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final state = context.select((ScoreBoardCubit cubit) => cubit.state);
+    final assignments = state.sortedAssignments;
+    final students = state.sortedStudents;
+    final course = context.read<ScoreBoardCubit>().courseInfo;
+    final l10n = context.l10n;
+
+    return Padding(
+      padding: const EdgeInsets.all(Spacing.l),
+      child: CallbackShortcuts(
+        bindings: {
+          LogicalKeySet(LogicalKeyboardKey.arrowLeft): () {
+            _focusLeft();
+          },
+          LogicalKeySet(LogicalKeyboardKey.arrowRight): () {
+            _focusRight();
+          },
+          LogicalKeySet(LogicalKeyboardKey.arrowUp): () {
+            _focusUp();
+          },
+          LogicalKeySet(LogicalKeyboardKey.arrowDown): () {
+            _focusDown();
+          },
+          LogicalKeySet(LogicalKeyboardKey.escape): () {
+            _submit();
+          },
+        },
+        child: StickyHeadersTable(
+          // AESTHETICS SETTINGS
+          cellDimensions: const CellDimensions.fixed(
+            contentCellWidth: ScoreCell.width,
+            contentCellHeight: ScoreCell.height,
+            stickyLegendWidth: LegendCell.width,
+            stickyLegendHeight: LegendCell.height,
+          ),
+          cellAlignments: const CellAlignments.uniform(Alignment.center),
+
+          // TOP LEFT CELL (LEGEND CELL)
+          legendCell: LegendCell(l10n.scoreBoardLabel_Student),
+
+          // COLUMNS (ASSIGNMENTS) (AND FINAL SCORE)
+          columnsLength: assignments.length + 1,
+          columnsTitleBuilder: (index) {
+            if (index == assignments.length) {
+              return TitleCell(l10n.scoreBoardLabel_FinalScore);
+            }
+
+            final assignment = assignments[index];
+
+            return GestureDetector(
+              onTap: () => showAssignmentDetailDialog(context, assignment),
+              onSecondaryTapDown: (details) {
+                showRightClickMenu(context, details, [
+                  PopupMenuItem(
+                    onTap: () => context.read<ScoreBoardCubit>().deleteAssignment(assignment.id),
+                    child: Text(l10n.buttonLabel_Remove),
+                  ),
+                ]);
+              },
+              child: TitleCell(assignment.name),
+            );
+          },
+
+          // ROWS (STUDENTS)
+          rowsLength: students.length,
+          rowsTitleBuilder: (index) {
+            final student = students[index];
+
+            return GestureDetector(
+              onTap: () => context.nav.push(StudentScorePage.route(course, student)),
+              child: TitleCell(student.name),
+            );
+          },
+
+          // SCORE
+          contentCellBuilder: (assignmentInd, studentInd) {
+            return GestureDetector(
+              onTap: () => _setFocus(studentInd, assignmentInd),
+              child: editedStudentInd == studentInd && editedAssignmentInd == assignmentInd
+                  ? EditedScoreCell(
+                      controller: _cellInputController,
+                      focusNode: _focusNode,
+                      // SUBMIT THE CURRENT CELL CHANGE AND FOCUS ON THE NEXT CELL
+                      onSubmit: (value) {
+                        _focusDown();
+                      },
+                      // SUBMIT THE CURRENT CELL CHANGE ONLY
+                      onTapOutside: (_) {
+                        _focusOff();
+                      },
+                    )
+                  : ScoreCell(score: state.score(studentInd, assignmentInd)),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  void _focusLeft() {
+    if (!_submit()) return;
+    _setFocus(editedStudentInd!, editedAssignmentInd! - 1);
+  }
+
+  void _focusRight() {
+    if (!_submit()) return;
+    _setFocus(editedStudentInd!, editedAssignmentInd! + 1);
+  }
+
+  void _focusUp() {
+    if (!_submit()) return;
+    _setFocus(editedStudentInd! - 1, editedAssignmentInd!);
+  }
+
+  void _focusDown() {
+    if (!_submit()) return;
+    _setFocus(editedStudentInd! + 1, editedAssignmentInd!);
+  }
+
+  void _focusOff() {
+    if (!_submit()) return;
+    _removeFocus();
+  }
+
+  // SUBMIT CHANGES ON A CELL, RETURNS TRUE IF ANYTHING IS SUBMITTED
+  bool _submit() {
+    print('SUBMIT');
+    // IF NOTHING IS FOCUSED
+    if (!_hasFocus()) return false;
+
+    // UPDATE SCORE
+    final score = double.tryParse(_cellInputController.text);
+    context.read<ScoreBoardCubit>().updateScore(editedStudentInd!, editedAssignmentInd!, score);
+
+    return true;
+  }
+
+  // SETS FOCUS, RETURNS TRUE IF FOCUS IS SUCCESSFULLY SET
+  bool _setFocus(int sid, int aid) {
+    print('SET FOCUS');
+    final state = context.read<ScoreBoardCubit>().state;
+    final alen = state.assignments.length;
+    final slen = state.students.length;
+
+    // OUT OF BOUNDS LEFTWARDS
+    if (aid < 0) {
+      return false;
+    }
+    // OUT OF BOUNDS RIGHTWARDS
+    else if (aid >= alen) {
+      return false;
+    }
+    // OUT OF BOUND UPWARDS
+    else if (sid < 0) {
+      return false;
+    }
+    // OUT OF BOUND DOWNWARDS
+    else if (sid >= slen) {
+      return false;
+    }
+
+    setState(() {
+      editedStudentInd = sid;
+      editedAssignmentInd = aid;
+    });
+
+    final scoreString = state.scoreString(sid, aid)!;
+
+    _cellInputController
+      ..text = scoreString
+      // SELECT EVERYTHING IN THE CELL
+      ..selection = TextSelection(
+        baseOffset: 0,
+        extentOffset: _cellInputController.text.length,
+      );
+    _focusNode.requestFocus();
+
+    print(_focusNode.hasFocus);
+    print(_focusNode.hasPrimaryFocus);
+
+    return true;
+  }
+
+  void _removeFocus() {
+    print('REMOVED FOCUS');
+    if (_hasFocus()) {
+      setState(() {
+        editedStudentInd = null;
+        editedAssignmentInd = null;
+      });
+    }
+  }
+
+  bool _hasFocus() {
+    return editedStudentInd != null && editedAssignmentInd != null;
+  }
+}

@@ -1,0 +1,53 @@
+import 'dart:io';
+
+import 'package:api/api.dart';
+import 'package:dart_frog/dart_frog.dart';
+import 'package:tools/tools.dart';
+
+Future<Response> calculateFinalScore(RequestContext context, Id courseId) async {
+  // CHECK PERMISSIONS
+  await ensureIsCourseTeacher(context, courseId);
+
+  // QUERY DATA POOL
+  final courseScores = (await context.db.collection('courses').modernFindOne(
+    filter: {'_id': courseId},
+    projection: {
+      '_id': 0,
+      'assignments.id': 1,
+      'assignments.type': 1,
+      'scores': 1,
+    },
+  ));
+  if (courseScores == null) {
+    throw NotFound();
+  }
+
+  print(courseScores['assignments'].length);
+  // TRANSFORM DATA (PERFORM CALCULATIONS)
+  final List<Json> assignments = toJsonList(courseScores['assignments']).toList();
+  for (int i = 0; i < assignments.length; i++) {
+    assignments[i]['id'] = fromId(assignments[i]['id']);
+  }
+
+  final CourseScores scores = toCourseScores(courseScores['scores']);
+
+  final finalScores = toFinalScores(assignments, scores);
+
+  // // UPDATE FINAL SCORE IN DATABASE
+  // final updateFinalScoreResult = await context.db.collection('courses').updateOne(
+  //   {'_id': courseId},
+  //   {
+  //     r'$set': {'finalScores': finalScores}
+  //   },
+  // );
+
+  // if (updateFinalScoreResult.hasWriteErrors) {
+  //   throw Exception('Something failed');
+  // }
+
+  // SEND RESPONSE
+  return Response.json(statusCode: HttpStatus.ok, body: {
+    'event': Events.calculatedFinalScore,
+    'data': finalScores,
+  });
+}

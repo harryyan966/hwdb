@@ -1,0 +1,19 @@
+[
+        // SHOW A LOADING OVERLAY WHEN THE PAGE STARTS LOADING
+        BlocListener<ScoreBoardCubit, ScoreBoardState>(
+          listenWhen: (previous, current) {
+            return current.status.isLoading;
+          },
+          listener: (context, state) {
+            showLoadingOverLay(context);
+          },
+        ),
+
+        // REMOVE THE LOADING OVERLAY WHEN THE PAGE STOPS LOADING
+        BlocListener<ScoreBoardCubit, ScoreBoardState>(
+          listenWhen: (previous, current) => previous.status.isLoading && current.status.isNotLoading,
+          listener: (context, state) {
+            // context.nav.pop();
+          },
+        ),
+      ],

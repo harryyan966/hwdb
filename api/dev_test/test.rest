@@ -1,0 +1,10 @@
+POST http://localhost:8080/auth/login
+
+{
+    "username": "Harry",
+    "password": "1234567890",
+}
+
+###
+
+GET http://localhost:8080

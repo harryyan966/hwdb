@@ -1,0 +1,52 @@
+StickyHeadersTable(
+  // AESTHETICS SETTINGS
+  cellDimensions: const CellDimensions.fixed(
+    contentCellWidth: ScoreCell.width,
+    contentCellHeight: ScoreCell.height,
+    stickyLegendWidth: LegendCell.width,
+    stickyLegendHeight: LegendCell.height,
+  ),
+  cellAlignments: const CellAlignments.uniform(Alignment.center),
+
+  // LEGEND CELL (ASSIGNMENT TITLE CELL)
+  legendCell: LegendCell(l10n.scoreBoardLabel_Assignment),
+
+  // COLUMN TITLE CELLS (LABELS)
+  columnsLength: columnTitles.length,
+  columnsTitleBuilder: (index) => TitleCell(columnTitles[index]),
+
+  // ROW TITLE CELLS (ASSIGNMENT TITLE)
+  rowsLength: assignments.length,
+  rowsTitleBuilder: (index) => TitleCell(assignments[index].name),
+  contentCellBuilder: (colInd, assignmentInd) {
+    final assignment = assignments[assignmentInd];
+
+    // IF THE TYPE IS REQUIRED
+    if (colInd == 0) {
+      return GestureDetector(
+        onSecondaryTapDown: (details) {
+          showRightClickMenu(context, details, [
+            PopupMenuItem(
+              onTap: () => showAssignmentDetailDialog(context, assignment),
+              child: Text(l10n.buttonLabel_Details),
+            ),
+          ]);
+        },
+        child: ContentCell(toAssignmentTypeString(context, assignment.type)),
+      );
+    }
+
+    // IF THE DUE DATE IS REQUIRED
+    else if (colInd == 1) {
+      return ContentCell(DateFormat.yMd().format(assignment.dueDate));
+    }
+
+    // IF THE SCORE IS REQUIRED
+    else if (colInd == 2) {
+      return ScoreCell(score: scores[assignment.id]);
+    }
+
+    // THROW ERROR AS NOTHING ELSE SHOULD BE REQUIRED
+    throw Exception('INDEX OUT OF BOUNDS');
+  },
+),

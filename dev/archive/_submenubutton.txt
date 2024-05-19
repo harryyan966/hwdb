@@ -1,0 +1,21 @@
+return SubmenuButton(
+      menuChildren: [
+        MenuItemButton(
+          onPressed: () => context.nav.push(SelectStudentsPage.route(
+            onConfirmed: context.read<ScoreBoardCubit>().addStudents,
+          )),
+          onHover: (value) {
+            print(value);
+          },
+          child: Text(l10n.scoreBoardLabel_Student),
+        ),
+        MenuItemButton(
+          onPressed: () => context.nav.push(CreateAssignmentPage.route(course)),
+          onHover: (value) {
+            print(value);
+          },
+          child: Text(l10n.scoreBoardLabel_Assignment),
+        ),
+      ],
+      child: Text(l10n.buttonLabel_Add),
+    );
