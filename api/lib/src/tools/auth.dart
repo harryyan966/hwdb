@@ -7,7 +7,7 @@ abstract class AuthTools {
   AuthTools._();
 
   // TODO: make secret env
-  static const _secret = Env.key;
+  static const _secret = Env.tokenSecret;
   static const _tokenExpiresIn = Duration(days: 6);
 
   /// Returns a token from an id
