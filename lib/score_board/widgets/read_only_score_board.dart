@@ -39,7 +39,7 @@ class _ReadOnlyScoreBoardState extends State<ReadOnlyScoreBoard> {
         legendCell: LegendCell(l10n.scoreBoardLabel_Student),
 
         // COLUMNS (ASSIGNMENTS) (AND FINAL SCORE)
-        columnsLength: assignments.length,
+        columnsLength: assignments.length + 1,
         columnsTitleBuilder: (index) {
           if (index == assignments.length) {
             return TitleCell(l10n.scoreBoardLabel_FinalScore, fillColor: colorScheme.primaryContainer);

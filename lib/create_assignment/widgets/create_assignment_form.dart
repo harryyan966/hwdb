@@ -104,7 +104,8 @@ class _CreateAssignmentFormState extends State<CreateAssignmentForm> {
                         child: CalendarDatePicker(
                           initialDate: dueDate.value,
                           firstDate: DateTime.now(),
-                          lastDate: DateTime(10000),
+                          lastDate: DateTime.now().add(const Duration(
+                              days: 366)), // adding a full year instead of half a year: reserving for future changes.
                           onDateChanged: (value) {
                             // UPDATE VALUE AND EXIT DIALOG
                             setState(() => dueDate.update(value));

@@ -21,42 +21,44 @@ class StudentScoreList extends StatelessWidget {
 
     return loading
         ? const Center(child: CircularProgressIndicator())
-        : Column(
-            children: [
-              Expanded(
-                child: Table(
-                  children: [
-                    TableRow(
+        : assignments.isEmpty
+            ? Center(child: Text(l10n.scoreRecordLabel_NoScoresYet))
+            : Column(
+                children: [
+                  Expanded(
+                    child: Table(
                       children: [
-                        LegendCell(l10n.scoreBoardLabel_Assignment),
-                        TitleCell(l10n.scoreBoardLabel_AssignmentType, fillColor: colorScheme.secondaryContainer),
-                        TitleCell(l10n.scoreBoardLabel_DueDate, fillColor: colorScheme.secondaryContainer),
-                        TitleCell(l10n.scoreBoardLabel_Score, fillColor: colorScheme.primaryContainer),
+                        TableRow(
+                          children: [
+                            LegendCell(l10n.scoreBoardLabel_Assignment),
+                            TitleCell(l10n.scoreBoardLabel_AssignmentType, fillColor: colorScheme.secondaryContainer),
+                            TitleCell(l10n.scoreBoardLabel_DueDate, fillColor: colorScheme.secondaryContainer),
+                            TitleCell(l10n.scoreBoardLabel_Score, fillColor: colorScheme.primaryContainer),
+                          ],
+                        ),
+                        for (final assignment in assignments)
+                          TableRow(
+                            children: [
+                              TitleCell(assignment.name,
+                                  fillColor: colorScheme.secondaryContainer, height: Cell.standardHeight),
+                              ContentCell(EnumString.assignmentType(context, assignment.type)),
+                              ContentCell(DateFormat.yMd().format(assignment.dueDate)),
+                              ScoreCell(score: scores[assignment.id]),
+                            ],
+                          )
                       ],
                     ),
-                    for (final assignment in assignments)
-                      TableRow(
-                        children: [
-                          TitleCell(assignment.name,
-                              fillColor: colorScheme.secondaryContainer, height: Cell.standardHeight),
-                          ContentCell(EnumString.assignmentType(context, assignment.type)),
-                          ContentCell(DateFormat.yMd().format(assignment.dueDate)),
-                          ScoreCell(score: scores[assignment.id]),
-                        ],
-                      )
-                  ],
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(l10n.scoreboardLabel_UnofficialMidtermScore(
-                      midtermScore?.toString() ?? l10n.scoreBoardLabel_EmptyScore)),
-                  Text(l10n
-                      .scoreboardLabel_UnofficialFinalScore(finalScore?.toString() ?? l10n.scoreBoardLabel_EmptyScore)),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text(l10n.scoreboardLabel_UnofficialMidtermScore(
+                          midtermScore?.toString() ?? l10n.scoreBoardLabel_EmptyScore)),
+                      Text(l10n.scoreboardLabel_UnofficialFinalScore(
+                          finalScore?.toString() ?? l10n.scoreBoardLabel_EmptyScore)),
+                    ],
+                  )
                 ],
-              )
-            ],
-          );
+              );
   }
 }

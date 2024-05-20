@@ -328,7 +328,9 @@ class ScoreBoardCubit extends Cubit<ScoreBoardState> {
       verticalAlign: ex.VerticalAlign.Center,
       textWrapping: ex.TextWrapping.WrapText,
       backgroundColorHex: ex.ExcelColor.fromInt(colorScheme.surface.value),
-      bottomBorder: ex.Border(borderStyle: ex.BorderStyle.Thin, borderColorHex: ex.ExcelColor.black),
+      fontColorHex: ex.ExcelColor.fromInt(colorScheme.onSurface.value),
+      bottomBorder: ex.Border(
+          borderStyle: ex.BorderStyle.Thin, borderColorHex: ex.ExcelColor.fromInt(colorScheme.onSurface.value)),
     );
 
     // INSERT LEGEND CELL
@@ -350,6 +352,7 @@ class ScoreBoardCubit extends Cubit<ScoreBoardState> {
       cell.cellStyle = baseStyle.copyWith(
         boldVal: true,
         backgroundColorHexVal: ex.ExcelColor.fromInt(colorScheme.secondaryContainer.value),
+        fontColorHexVal: ex.ExcelColor.fromInt(colorScheme.onSecondaryContainer.value),
       );
 
       sheet.setRowHeight(i + 1, 30);
@@ -366,6 +369,9 @@ class ScoreBoardCubit extends Cubit<ScoreBoardState> {
         backgroundColorHexVal: i == state.assignments.length
             ? ex.ExcelColor.fromInt(colorScheme.primaryContainer.value)
             : ex.ExcelColor.fromInt(colorScheme.secondaryContainer.value),
+        fontColorHexVal: i == state.assignments.length
+            ? ex.ExcelColor.fromInt(colorScheme.onPrimaryContainer.value)
+            : ex.ExcelColor.fromInt(colorScheme.onSecondaryContainer.value),
       );
 
       sheet.setColumnWidth(i + 1, 15);
@@ -380,6 +386,7 @@ class ScoreBoardCubit extends Cubit<ScoreBoardState> {
         cell.value = score == null ? ex.TextCellValue(l10n.scoreBoardLabel_EmptyScore) : ex.DoubleCellValue(score);
         cell.cellStyle = baseStyle.copyWith(
           backgroundColorHexVal: score == null ? ex.ExcelColor.fromInt(colorScheme.errorContainer.value) : null,
+          fontColorHexVal: score == null ? ex.ExcelColor.fromInt(colorScheme.onErrorContainer.value) : null,
         );
       }
     }

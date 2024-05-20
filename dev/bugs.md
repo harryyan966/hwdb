@@ -141,4 +141,10 @@
 ## `The following assertion was thrown while processing the key message handler:'package:flutter/src/rendering/editable.dart': Failed assertion: line 195 pos 12: 'isValid': is not true.`
     - (?) RELOAD APP
 
-## Create User is not working
+## Update Personal password is not working
+    - the client is calling `updateUser` instead of `updatePersonalInfo`. The former requires one to be an admin.
+    - merge `updateUser` and `updatePersonalInfo` into one function
+    
+## Exported excel is non-readable in dark mode
+    - should set the text as `onSurface`
+
