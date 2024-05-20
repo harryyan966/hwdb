@@ -20,9 +20,12 @@ Future<Response> getCourseStudents(RequestContext context, Id courseId) async {
   }
 
   // Get students of the course.
-  final getStudentsRes = await context.db.collection('users').find({
-    '_id': {'\$in': studentIds}
-  }).toList();
+  final getStudentsRes = await context.db.collection('users').modernFind(
+    filter: {
+      '_id': {'\$in': studentIds}
+    },
+    projection: Projections.user,
+  ).toList();
   final students = getStudentsRes;
 
   // If there are ids that do not match students
