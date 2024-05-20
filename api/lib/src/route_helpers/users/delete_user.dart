@@ -7,7 +7,10 @@ Future<Response> deleteUser(RequestContext context, Id userId) async {
   await Ensure.isAdmin(context);
 
   // Get info of the user to be deleted.
-  final getDeletedUserRes = await context.db.collection('users').findOne({'_id': userId});
+  final getDeletedUserRes = await context.db.collection('users').modernFindOne(
+    filter: {'_id': userId},
+    projection: Projections.user,
+  );
   if (getDeletedUserRes == null) {
     throw NotFound('user');
   }

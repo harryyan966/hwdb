@@ -17,7 +17,7 @@ class UserInfo {
   factory UserInfo.fromJson(Json json) => UserInfo(
         id: json['id'],
         name: json['name'],
-        role: json['role'].name,
+        role: ParseString.toUserRoleOrNull(json['role'])!,
         password: json['password'],
       );
 }

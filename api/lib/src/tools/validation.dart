@@ -100,21 +100,24 @@ abstract class Ensure {
       return;
     }
 
-    // Get one or zero duplicate assignments.
-    final getDuplicateAssignmentsRes = await context.db.collection('courses').findOne(
-      {
+    // Get duplicate assignments from the course.
+    final getDuplicateAssignmentsRes = await context.db.collection('courses').modernFindOne(
+      filter: {
         '_id': courseId,
         '\$or': [
           if (name != null) {'assignments.name': name},
           if (type != null && type.countLimit == 1) {'assignments.type': type.name},
         ],
       },
+      projection: {'assignments.\$': 1},
     );
 
     // If a duplicate assignment is found
     if (getDuplicateAssignmentsRes != null) {
+      final duplicateAssignment = getDuplicateAssignmentsRes['assignments'].first;
+
       // If they duplicate on a name
-      if (getDuplicateAssignmentsRes['name'] == name) {
+      if (duplicateAssignment['name'] == name) {
         throw InvalidField({'name': ValidationErrors.duplicated(DuplicationFields.assignmentName)});
       }
 
