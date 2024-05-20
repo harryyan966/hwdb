@@ -105,6 +105,10 @@ class $AssetsImagesCollegesGen {
   AssetGenImage get nyu =>
       const AssetGenImage('assets/images/colleges/nyu.png');
 
+  /// File path: assets/images/colleges/penn.png
+  AssetGenImage get penn =>
+      const AssetGenImage('assets/images/colleges/penn.png');
+
   /// File path: assets/images/colleges/pineapple.png
   AssetGenImage get pineapple =>
       const AssetGenImage('assets/images/colleges/pineapple.png');
@@ -189,6 +193,7 @@ class $AssetsImagesCollegesGen {
         northwestern,
         notredame,
         nyu,
+        penn,
         pineapple,
         princeton,
         rice,
