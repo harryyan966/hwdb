@@ -13,4 +13,11 @@ class UserInfo {
     required this.role,
     required this.password,
   });
+
+  factory UserInfo.fromJson(Json json) => UserInfo(
+        id: json['id'],
+        name: json['name'],
+        role: json['role'].name,
+        password: json['password'],
+      );
 }
