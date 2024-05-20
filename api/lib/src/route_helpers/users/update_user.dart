@@ -23,8 +23,10 @@ Future<Response> updateUser(RequestContext context, Id userId) async {
   }
 
   // Ensure new user name is valid and does not exist in the database.
-  Validate.userName(name);
-  await Ensure.userNameNotInDb(context, name);
+  if (name != null) {
+    Validate.userName(name);
+    await Ensure.userNameNotInDb(context, name);
+  }
 
   // Update user in the database.
   final updateUserRes = await context.db.collection('users').updateOne(

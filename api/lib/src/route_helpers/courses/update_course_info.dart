@@ -38,13 +38,15 @@ Future<Response> updateCourseInfo(RequestContext context, Id courseId) async {
     throw Exception('course');
   }
 
-  // Ensure there are no duplicate courses.
-  await Ensure.courseInfoNotInDb(
-    context,
-    name ?? getCourseInfoRes['name']!,
-    grade ?? ParseString.toGradeOrNull(getCourseInfoRes['grade'])!,
-    year ?? getCourseInfoRes['year']!,
-  );
+  // Ensure there are no duplicate courses if course info is edited.
+  if (name != null || grade != null || year != null) {
+    await Ensure.courseInfoNotInDb(
+      context,
+      name ?? getCourseInfoRes['name']!,
+      grade ?? ParseString.toGradeOrNull(getCourseInfoRes['grade'])!,
+      year ?? getCourseInfoRes['year']!,
+    );
+  }
 
   // Update course.
   final updateCourseRes = await context.db.collection('courses').updateOne(

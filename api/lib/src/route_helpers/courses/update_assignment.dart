@@ -17,7 +17,9 @@ Future<Response> updateAssignment(RequestContext context, Id courseId, Id assign
   Validate.assignmentDueDate(dueDate);
 
   // Ensure there are no duplicate assignments in the course.
-  await Ensure.assignmentInfoNotInDb(context, courseId, name, type);
+  if (name != null || type != null) {
+    await Ensure.assignmentInfoNotInDb(context, courseId, name, type);
+  }
 
   // Update assignment in the database.
   final updateAssignmentRes = await context.db.collection('courses').updateOne(
