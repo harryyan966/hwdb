@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:client_tools/client_tools.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:hw_dashboard/l10n/l10n.dart';
 
@@ -29,7 +30,7 @@ class _CollegeCasinoViewState extends State<CollegeCasinoView> {
       padding: const EdgeInsets.all(Spacing.l),
       child: Column(
         children: [
-          _cards(),
+          CardsGrid(context: context),
           const SizedBox(height: Spacing.m),
           ElevatedButton(
             onPressed: () {
@@ -41,27 +42,31 @@ class _CollegeCasinoViewState extends State<CollegeCasinoView> {
       ),
     );
   }
+}
 
-  Expanded _cards() {
+class CardsGrid extends StatelessWidget {
+  const CardsGrid({
+    super.key,
+    required this.context,
+  });
+
+  final BuildContext context;
+
+  @override
+  Widget build(BuildContext context) {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.only(right: Spacing.m),
         child: GridView.builder(
-          // gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-          //   maxCrossAxisExtent: 200,
-          //   mainAxisSpacing: Spacing.s,
-          //   crossAxisSpacing: Spacing.s,
-          //   childAspectRatio: 11 / 16,
-          // ),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 5,
             mainAxisSpacing: Spacing.s,
             crossAxisSpacing: Spacing.s,
-            childAspectRatio: 11 / 16,
+            mainAxisExtent: 300,
           ),
           itemCount: 10,
           // ignore: prefer_const_constructors
-          itemBuilder: (context, index) => RandomCard(), //
+          itemBuilder: (context, index) => RandomCard(), // this is deliberately not const as it is reset by rebuild
         ),
       ),
     );
@@ -119,6 +124,7 @@ class _RandomCardState extends State<RandomCard> with TickerProviderStateMixin {
     Assets.images.colleges.ucsb.provider(),
   ];
   static final pineapple = Assets.images.colleges.pineapple.provider();
+  static final cardBack = Assets.images.collegeCardBack.provider();
 
   late AnimationController _backController;
   late AnimationController _frontController;
@@ -148,15 +154,19 @@ class _RandomCardState extends State<RandomCard> with TickerProviderStateMixin {
         },
         child: Stack(
           children: [
-            _cardSection(
-              controller: _backController,
-              animation: _backAnimation,
-              image: Assets.images.collegeCardBack.provider(),
+            Positioned.fill(
+              child: _cardSection(
+                controller: _backController,
+                animation: _backAnimation,
+                image: cardBack,
+              ),
             ),
-            _cardSection(
-              controller: _frontController,
-              animation: _frontAnimation,
-              image: _card,
+            Positioned.fill(
+              child: _cardSection(
+                controller: _frontController,
+                animation: _frontAnimation,
+                image: _card,
+              ),
             ),
           ],
         ),
@@ -166,7 +176,7 @@ class _RandomCardState extends State<RandomCard> with TickerProviderStateMixin {
 
   ImageProvider _getRandomCard() {
     final tierRand = _random.nextDouble();
-    final probs = [1, 0.01, 0.04, 0.1];
+    final probs = [0.003, 0.009, 0.027, 0.081];
 
     // Calculate cumulative prob.
     for (int i = 0; i < probs.length - 1; i++) {
@@ -186,7 +196,7 @@ class _RandomCardState extends State<RandomCard> with TickerProviderStateMixin {
     return pineapple;
   }
 
-  AnimatedBuilder _cardSection({
+  Widget _cardSection({
     required AnimationController controller,
     required Animation<double> animation,
     required ImageProvider image,
@@ -199,7 +209,10 @@ class _RandomCardState extends State<RandomCard> with TickerProviderStateMixin {
           ..rotateY(
             animation.value,
           ),
-        child: Image(image: image),
+        child: Image(
+          image: image,
+          fit: BoxFit.fitWidth,
+        ),
       ),
     );
   }

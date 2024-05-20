@@ -78,6 +78,7 @@ class _LoginFormState extends State<LoginForm> {
               labelText: l10n.formLabel_UserName,
               errorText: username.error,
             ),
+            textInputAction: TextInputAction.next,
           ),
           const SizedBox(height: Spacing.m),
 
@@ -88,6 +89,8 @@ class _LoginFormState extends State<LoginForm> {
               labelText: l10n.formLabel_Password,
               errorText: password.error,
             ),
+            textInputAction: TextInputAction.done,
+            onSubmitted: (_) => _submit(),
           ),
           const SizedBox(height: Spacing.xxl),
 

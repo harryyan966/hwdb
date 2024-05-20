@@ -33,7 +33,6 @@ class EditableScoreBoardView extends StatelessWidget {
     final courseName = context.read<ScoreBoardCubit>().courseInfo.name;
     final loading = context.select((ScoreBoardCubit cubit) => cubit.state.status.isLoading);
     final hasStudents = context.select((ScoreBoardCubit cubit) => cubit.state.students.isNotEmpty);
-    final hasAssignments = context.select((ScoreBoardCubit cubit) => cubit.state.assignments.isNotEmpty);
     final l10n = context.l10n;
 
     return MultiBlocListener(
@@ -73,7 +72,7 @@ class EditableScoreBoardView extends StatelessWidget {
         ),
         body: loading
             ? const Center(child: CircularProgressIndicator())
-            : hasStudents && hasAssignments
+            : hasStudents
                 ? const EditableScoreBoard()
                 : Center(child: Text(l10n.scoreboardLabel_NoStudentsYet)),
       ),
