@@ -7,6 +7,8 @@
     "navBarLabel_Courses": "课程",
     "navBarLabel_Account": "账户",
     "navBarLabel_Admin": "管理",
+    "navBarLabel_CollegeCasino": "抽大学",
+
 
     "pageTitle_Courses": "课程",
     "pageTitle_Account": "账户",
@@ -22,6 +24,7 @@
     "pageTitle_ManageCourses": "管理课程",
     "pageTitle_EditCourse": "修改课程信息",
     "pageTitle_StudentScoreReport": "学生分数报告",
+    "pageTitle_CollegeCasino": "抽大学",
 
     "formLabel_UserName": "用户名",
     "formLabel_NewUserName": "新用户名",
@@ -87,6 +90,7 @@
     "buttonLabel_ToExcel": "Excel",
     "buttonLabel_ToPDF": "PDF",
     "buttonLabel_SubmitCourseInfo": "修改课程基本信息",
+    "buttonLabel_PlayAgain": "再来！",
     
     "linkLabel_Add": "添加",
     "linkLabel_Edit": "编辑",

@@ -27,6 +27,15 @@ class _LoginFormState extends State<LoginForm> {
 
     return MultiBlocListener(
       listeners: [
+        // WHEN THE USER HAS AUTO-LOGGED IN
+        BlocListener<LoginCubit, LoginState>(
+          listenWhen: (previous, current) => current.event == Events.gotCurrentUser,
+          listener: (context, state) {
+            context.nav.jump(HomePage.route());
+            context.read<AppCubit>().updateUser(state.user);
+          },
+        ),
+
         // WHEN THE USER HAS LOGGED IN SUCCESSFULLY
         BlocListener<LoginCubit, LoginState>(
           listenWhen: (previous, current) => current.event == Events.loggedIn,

@@ -78,6 +78,7 @@ class AppView extends StatelessWidget {
             child: Text(l10n.buttonLabel_Ok),
           ),
         );
+
         return true;
       }
 
@@ -92,6 +93,8 @@ class AppView extends StatelessWidget {
           ),
         );
       }
+
+      showSimpleDialog(rootNavigatorKey.currentContext!, title: error.toString(), content: Text(st.toString()));
       return false;
     };
 

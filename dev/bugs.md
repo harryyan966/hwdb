@@ -148,3 +148,6 @@
 ## Exported excel is non-readable in dark mode
     - should set the text as `onSurface`
 
+## git push doesn't work suddenly
+    - don't know why but
+    - `eval 'ssh-agent -s' && ssh-add ~/.ssh/id_ed25519`'

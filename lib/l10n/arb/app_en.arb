@@ -7,6 +7,7 @@
     "navBarLabel_Courses": "Courses",
     "navBarLabel_Account": "Account",
     "navBarLabel_Admin": "Admin",
+    "navBarLabel_CollegeCasino": "College playground",
 
     "pageTitle_Courses": "Courses",
     "pageTitle_Account": "Account",
@@ -22,6 +23,7 @@
     "pageTitle_ManageCourses": "Manage Courses",
     "pageTitle_EditCourse": "Edit Course",
     "pageTitle_StudentScoreReport": "Student Score Report",
+    "pageTitle_CollegeCasino": "College Playground",
 
     "formLabel_UserName": "Username",
     "formLabel_NewUserName": "New username",
@@ -86,6 +88,7 @@
     "buttonLabel_PublishAsFinal": "Publish as official midterm score",
     "buttonLabel_ToExcel": "To Excel",
     "buttonLabel_ToPDF": "To PDF",
+    "buttonLabel_PlayAgain": "Reset",
     
     "linkLabel_Add": "Add",
     "linkLabel_Edit": "Edit",

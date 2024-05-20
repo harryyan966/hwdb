@@ -12,16 +12,45 @@ class LoginCubit extends Cubit<LoginState> {
 
   final HwdbHttpClient _httpClient;
 
+  Future<void> tryGetUser() async {
+    if (state.status.isLoading) return;
+    emit(state.copyWith(status: PageStatus.loading));
+
+    try {
+      // TRY REQUESTING CURRENT USER
+      final res = await _httpClient.get('auth/currentuser');
+
+      // IF THE REQUEST IS SUCCESSFUL
+      if (Events.gotCurrentUser.matches(res['event'])) {
+        emit(state.copyWith(
+          status: PageStatus.good,
+          event: Events.gotCurrentUser,
+          user: User.fromJson(res['data']),
+        ));
+      }
+
+      if (Errors.unauthorized.matches(res['event'])) {
+        emit(state.copyWith(
+          status: PageStatus.good,
+          error: Errors.unauthorized,
+        ));
+      }
+
+      // THROW THE UNEXPECTED RESULT
+      else {
+        emit(state.copyWith(status: PageStatus.bad));
+        throw Exception(res.pretty());
+      }
+    } on SessionExpiredFailure {
+      emit(state.copyWith(status: PageStatus.good));
+    }
+  }
+
   Future<void> logIn({
     required String username,
     required String password,
   }) async {
-    // DO NOTHING IF THE PAGE IS STILL LOADING
-    if (state.status.isLoading) {
-      return;
-    }
-
-    // START LOADING
+    if (state.status.isLoading) return;
     emit(state.copyWith(status: PageStatus.loading));
 
     // REQUEST TO LOG IN

@@ -16,12 +16,196 @@ class $AssetsImagesGen {
   AssetGenImage get appLogo =>
       const AssetGenImage('assets/images/app-logo.png');
 
+  /// File path: assets/images/college-card-back.png
+  AssetGenImage get collegeCardBack =>
+      const AssetGenImage('assets/images/college-card-back.png');
+
+  $AssetsImagesCollegesGen get colleges => const $AssetsImagesCollegesGen();
+
   /// File path: assets/images/default-profile-image.png
   AssetGenImage get defaultProfileImage =>
       const AssetGenImage('assets/images/default-profile-image.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [appLogo, defaultProfileImage];
+  List<AssetGenImage> get values =>
+      [appLogo, collegeCardBack, defaultProfileImage];
+}
+
+class $AssetsImagesCollegesGen {
+  const $AssetsImagesCollegesGen();
+
+  /// File path: assets/images/colleges/brown.png
+  AssetGenImage get brown =>
+      const AssetGenImage('assets/images/colleges/brown.png');
+
+  /// File path: assets/images/colleges/bu.png
+  AssetGenImage get bu => const AssetGenImage('assets/images/colleges/bu.png');
+
+  /// File path: assets/images/colleges/caltech.png
+  AssetGenImage get caltech =>
+      const AssetGenImage('assets/images/colleges/caltech.png');
+
+  /// File path: assets/images/colleges/cmu.png
+  AssetGenImage get cmu =>
+      const AssetGenImage('assets/images/colleges/cmu.png');
+
+  /// File path: assets/images/colleges/columbia.png
+  AssetGenImage get columbia =>
+      const AssetGenImage('assets/images/colleges/columbia.png');
+
+  /// File path: assets/images/colleges/cornell.png
+  AssetGenImage get cornell =>
+      const AssetGenImage('assets/images/colleges/cornell.png');
+
+  /// File path: assets/images/colleges/dartmouth.png
+  AssetGenImage get dartmouth =>
+      const AssetGenImage('assets/images/colleges/dartmouth.png');
+
+  /// File path: assets/images/colleges/duke.png
+  AssetGenImage get duke =>
+      const AssetGenImage('assets/images/colleges/duke.png');
+
+  /// File path: assets/images/colleges/emory.png
+  AssetGenImage get emory =>
+      const AssetGenImage('assets/images/colleges/emory.png');
+
+  /// File path: assets/images/colleges/gatech.png
+  AssetGenImage get gatech =>
+      const AssetGenImage('assets/images/colleges/gatech.png');
+
+  /// File path: assets/images/colleges/harvard.png
+  AssetGenImage get harvard =>
+      const AssetGenImage('assets/images/colleges/harvard.png');
+
+  /// File path: assets/images/colleges/illinois.png
+  AssetGenImage get illinois =>
+      const AssetGenImage('assets/images/colleges/illinois.png');
+
+  /// File path: assets/images/colleges/jhu.png
+  AssetGenImage get jhu =>
+      const AssetGenImage('assets/images/colleges/jhu.png');
+
+  /// File path: assets/images/colleges/madison.png
+  AssetGenImage get madison =>
+      const AssetGenImage('assets/images/colleges/madison.png');
+
+  /// File path: assets/images/colleges/mit.png
+  AssetGenImage get mit =>
+      const AssetGenImage('assets/images/colleges/mit.png');
+
+  /// File path: assets/images/colleges/northwestern.png
+  AssetGenImage get northwestern =>
+      const AssetGenImage('assets/images/colleges/northwestern.png');
+
+  /// File path: assets/images/colleges/notredame.png
+  AssetGenImage get notredame =>
+      const AssetGenImage('assets/images/colleges/notredame.png');
+
+  /// File path: assets/images/colleges/nyu.png
+  AssetGenImage get nyu =>
+      const AssetGenImage('assets/images/colleges/nyu.png');
+
+  /// File path: assets/images/colleges/pineapple.png
+  AssetGenImage get pineapple =>
+      const AssetGenImage('assets/images/colleges/pineapple.png');
+
+  /// File path: assets/images/colleges/princeton.png
+  AssetGenImage get princeton =>
+      const AssetGenImage('assets/images/colleges/princeton.png');
+
+  /// File path: assets/images/colleges/rice.png
+  AssetGenImage get rice =>
+      const AssetGenImage('assets/images/colleges/rice.png');
+
+  /// File path: assets/images/colleges/rochester.png
+  AssetGenImage get rochester =>
+      const AssetGenImage('assets/images/colleges/rochester.png');
+
+  /// File path: assets/images/colleges/stanford.png
+  AssetGenImage get stanford =>
+      const AssetGenImage('assets/images/colleges/stanford.png');
+
+  /// File path: assets/images/colleges/tufts.png
+  AssetGenImage get tufts =>
+      const AssetGenImage('assets/images/colleges/tufts.png');
+
+  /// File path: assets/images/colleges/ucb.png
+  AssetGenImage get ucb =>
+      const AssetGenImage('assets/images/colleges/ucb.png');
+
+  /// File path: assets/images/colleges/ucd.png
+  AssetGenImage get ucd =>
+      const AssetGenImage('assets/images/colleges/ucd.png');
+
+  /// File path: assets/images/colleges/uchicago.png
+  AssetGenImage get uchicago =>
+      const AssetGenImage('assets/images/colleges/uchicago.png');
+
+  /// File path: assets/images/colleges/ucla.png
+  AssetGenImage get ucla =>
+      const AssetGenImage('assets/images/colleges/ucla.png');
+
+  /// File path: assets/images/colleges/ucsb.png
+  AssetGenImage get ucsb =>
+      const AssetGenImage('assets/images/colleges/ucsb.png');
+
+  /// File path: assets/images/colleges/ucsd.png
+  AssetGenImage get ucsd =>
+      const AssetGenImage('assets/images/colleges/ucsd.png');
+
+  /// File path: assets/images/colleges/unc.png
+  AssetGenImage get unc =>
+      const AssetGenImage('assets/images/colleges/unc.png');
+
+  /// File path: assets/images/colleges/upenn.png
+  AssetGenImage get upenn =>
+      const AssetGenImage('assets/images/colleges/upenn.png');
+
+  /// File path: assets/images/colleges/vanderbilt.png
+  AssetGenImage get vanderbilt =>
+      const AssetGenImage('assets/images/colleges/vanderbilt.png');
+
+  /// File path: assets/images/colleges/yale.png
+  AssetGenImage get yale =>
+      const AssetGenImage('assets/images/colleges/yale.png');
+
+  /// List of all assets
+  List<AssetGenImage> get values => [
+        brown,
+        bu,
+        caltech,
+        cmu,
+        columbia,
+        cornell,
+        dartmouth,
+        duke,
+        emory,
+        gatech,
+        harvard,
+        illinois,
+        jhu,
+        madison,
+        mit,
+        northwestern,
+        notredame,
+        nyu,
+        pineapple,
+        princeton,
+        rice,
+        rochester,
+        stanford,
+        tufts,
+        ucb,
+        ucd,
+        uchicago,
+        ucla,
+        ucsb,
+        ucsd,
+        unc,
+        upenn,
+        vanderbilt,
+        yale
+      ];
 }
 
 class Assets {

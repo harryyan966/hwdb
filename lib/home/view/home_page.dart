@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hw_dashboard/account/view/account_section.dart';
 import 'package:hw_dashboard/admin/admin.dart';
 import 'package:hw_dashboard/app/app.dart';
+import 'package:hw_dashboard/college_casino/view/college_casino_page.dart';
 import 'package:hw_dashboard/course_search/course_search.dart';
 import 'package:hw_dashboard/home/home.dart';
 import 'package:hw_dashboard/l10n/l10n.dart';
@@ -54,10 +55,17 @@ class HomeView extends StatelessWidget {
       navActiveIcon: const Icon(Icons.settings_outlined),
       navLabel: l10n.navBarLabel_Admin,
     );
+    final collegeCasinoPage = _PageInfo(
+      page: const CollegeCasinoSection(),
+      pageTitle: l10n.pageTitle_CollegeCasino,
+      navIcon: const Icon(Icons.casino),
+      navActiveIcon: const Icon(Icons.casino_outlined),
+      navLabel: l10n.navBarLabel_CollegeCasino,
+    );
 
     final pages = switch (userRole) {
       UserRole.none => throw Exception('EMPTY USERS SHOULD NOT BE HERE'),
-      UserRole.student => [coursePage, accountPage],
+      UserRole.student => [coursePage, collegeCasinoPage, accountPage],
       UserRole.teacher => [coursePage, accountPage],
       UserRole.admin => [coursePage, accountPage, adminPage],
     };
