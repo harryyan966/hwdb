@@ -18,7 +18,11 @@ Future<Response> publishFinalScores(RequestContext context, Id courseId) async {
 
   // Ensure assignments meet publishable standards.
   final assignments = ConversionTools.toJsonList(getFinalScoresRes['assignments'] ?? []);
-  ScoreTools.validateAssignmentsForFinal(assignments.map((e) => e..update('id', (v) => fromId(v))).toList());
+  try {
+    ScoreTools.validateAssignmentsForFinal(assignments.map((e) => e..update('id', (v) => fromId(v))).toList());
+  } on Exception {
+    throw BadRequest(Errors.insufficientAssignmentList);
+  }
 
   // Get final scores.
   final finalScores = getFinalScoresRes['finalScores'] ?? {};

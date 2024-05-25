@@ -18,7 +18,11 @@ Future<Response> publishMidtermScores(RequestContext context, Id courseId) async
 
   // Ensure assignments meet publishable standards.
   final assignments = ConversionTools.toJsonList(getFinalScoresRes['assignments'] ?? []);
-  ScoreTools.validateAssignmentsForMidterm(assignments.map((e) => e..update('id', (v) => fromId(v))).toList());
+  try {
+    ScoreTools.validateAssignmentsForMidterm(assignments.map((e) => e..update('id', (v) => fromId(v))).toList());
+  } on Exception {
+    throw BadRequest(Errors.insufficientAssignmentList);
+  }
 
   // Get final scores.
   final finalScores = getFinalScoresRes['finalScores'] ?? {};
