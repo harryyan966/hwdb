@@ -230,11 +230,11 @@ abstract class Ensure {
       print('error type 1');
       throw Exception('Something went wrong.');
     }
-    if (res.isFailure) {
-      print(res.errmsg);
-      print('error type 2');
-      throw Exception('Something went wrong.');
-    }
+    // if (res.isFailure) {
+    //   print(res.errmsg);
+    //   print('error type 2');
+    //   throw Exception('Something went wrong.');
+    // }
     if (!res.isAcknowledged) {
       print(res.errmsg);
       print('error type 3');
