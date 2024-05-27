@@ -29,7 +29,7 @@ class LoginCubit extends Cubit<LoginState> {
         ));
       }
 
-      if (Errors.unauthorized.matches(res['event'])) {
+      else if (Errors.unauthorized.matches(res['event'])) {
         emit(state.copyWith(
           status: PageStatus.good,
           error: Errors.unauthorized,

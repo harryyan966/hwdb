@@ -1,15 +1,3 @@
-## Routes comments
-- done
-
-## Auth comments
-- done
-
-## Users comments
-- done
-
-## Courses comments
-- done
-
 ## other comments (like main and tools)
 
 # Comments for client
@@ -30,33 +18,15 @@
 
 ## Make Every course contain a non-removable participation, midterm, and final exam. 
 
-## Make courses without sufficient data unable to calculate final scores. 
-- supposedly done
-
-## Generate Midterm Scores
-- supposedly done
-
 ## Test real-world loading behavior with latency
 
 ## (!!) Don't allow brute forcing passwords
 
-## Don't allow publishing scores with no adequate assignments
-- supposedly done
-
 ## Midterm and final mode in course score board
-
-## Calculate midterm scores when publishing them
-- discarded
 
 ## Ensure there are no too much exception messages thrown
 
 ## Stipulate how to throw exceptions.
-
-## Try converting every enum input back to their enums in the api.
-- supposedly done
-
-## Add pulldown refresh to every list
-- supposedly done
 
 ## (?) DO NOT BE OBSESSED WITH CONSTS
 
@@ -69,8 +39,6 @@
 ## Search by year and semester in course search pages
 
 ## Make final scores editable.
-
-## (!) Auto-login
 
 ## (?) Make `deletes` `removes`
 

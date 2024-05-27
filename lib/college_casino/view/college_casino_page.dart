@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:client_tools/client_tools.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:hw_dashboard/l10n/l10n.dart';
 
 class CollegeCasinoSection extends StatelessWidget {
@@ -55,20 +55,22 @@ class CardsGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.only(right: Spacing.m),
-        child: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 5,
-            mainAxisSpacing: Spacing.s,
-            crossAxisSpacing: Spacing.s,
-            mainAxisExtent: 300,
+      child: LayoutBuilder(builder: (context, constraints) {
+        return Padding(
+          padding: const EdgeInsets.only(right: Spacing.m),
+          child: GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 5,
+              mainAxisSpacing: Spacing.s,
+              crossAxisSpacing: Spacing.s,
+              mainAxisExtent: constraints.maxHeight / 2,
+            ),
+            itemCount: 10,
+            // ignore: prefer_const_constructors
+            itemBuilder: (context, index) => RandomCard(), // this is deliberately not const as it is reset by rebuild
           ),
-          itemCount: 10,
-          // ignore: prefer_const_constructors
-          itemBuilder: (context, index) => RandomCard(), // this is deliberately not const as it is reset by rebuild
-        ),
-      ),
+        );
+      }),
     );
   }
 }
@@ -82,7 +84,7 @@ class RandomCard extends StatefulWidget {
 
 class _RandomCardState extends State<RandomCard> with TickerProviderStateMixin {
   static const _hasBonusCard = false;
-  static final _random = Random();
+  static final _random = Random.secure();
   static final t1 = <ImageProvider>[
     Assets.images.colleges.stanford.provider(),
     Assets.images.colleges.mit.provider(),
@@ -90,9 +92,9 @@ class _RandomCardState extends State<RandomCard> with TickerProviderStateMixin {
     Assets.images.colleges.yale.provider(),
     Assets.images.colleges.princeton.provider(),
     Assets.images.colleges.caltech.provider(),
-    Assets.images.colleges.upenn.provider(),
   ];
   static final t2 = <ImageProvider>[
+    Assets.images.colleges.upenn.provider(),
     Assets.images.colleges.dartmouth.provider(),
     Assets.images.colleges.cornell.provider(),
     Assets.images.colleges.northwestern.provider(),
@@ -205,13 +207,13 @@ class _RandomCardState extends State<RandomCard> with TickerProviderStateMixin {
       animation: controller,
       builder: (context, child) => Transform(
         alignment: Alignment.center,
-        transform: Matrix4.identity()
-          ..rotateY(
-            animation.value,
+        transform: Matrix4.identity()..rotateY(animation.value),
+        child: Container(
+          color: Colors.white,
+          child: Image(
+            image: image,
+            fit: BoxFit.fitWidth,
           ),
-        child: Image(
-          image: image,
-          fit: BoxFit.fitWidth,
         ),
       ),
     );

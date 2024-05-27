@@ -62,7 +62,7 @@ class ScoreBoardState extends Equatable {
     return scores[sid]?[aid];
   }
 
-  String? scoreString(int studentInd, int assignmentInd) {
+  String scoreString(int studentInd, int assignmentInd) {
     return score(studentInd, assignmentInd)?.toString() ?? '';
   }
 

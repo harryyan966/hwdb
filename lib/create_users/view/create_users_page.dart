@@ -34,6 +34,7 @@ class _CreateUsersViewState extends State<CreateUsersView> {
 
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text(l10n.pageTitle_CreateUser),
         actions: [
           loading
@@ -46,7 +47,8 @@ class _CreateUsersViewState extends State<CreateUsersView> {
                     }
                   },
                   child: Text(l10n.buttonLabel_Ok),
-                )
+                ),
+          const SizedBox(width: Spacing.m),
         ],
       ),
       body: const Padding(

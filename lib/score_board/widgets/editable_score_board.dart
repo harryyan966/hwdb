@@ -93,7 +93,7 @@ class _EditableScoreBoardState extends State<EditableScoreBoard> {
                 ? CallbackShortcuts(
                     bindings: {
                       const SingleActivator(LogicalKeyboardKey.escape): () {
-                        _submit();
+                        _submitAndUnfocus();
                       },
                       const SingleActivator(LogicalKeyboardKey.arrowLeft): () {
                         _submitAndFocus(studentInd, assignmentInd - 1);
@@ -115,7 +115,7 @@ class _EditableScoreBoardState extends State<EditableScoreBoard> {
                         _submitAndFocus(studentInd + 1, assignmentInd);
                       },
                       // SUBMIT THE CURRENT CELL CHANGE ONLY
-                      onTapOutside: (_) => _submit(),
+                      onTapOutside: (_) => _submitAndUnfocus(),
                     ),
                   )
                 : ScoreCell(score: state.score(studentInd, assignmentInd)),
@@ -127,19 +127,22 @@ class _EditableScoreBoardState extends State<EditableScoreBoard> {
 
   void _submitAndFocus(int studentInd, int assignmentInd) {
     // SCORE STRING OF CURRENT STUDENT AND ASSIGNMENT
-    final scoreString = context.read<ScoreBoardCubit>().state.scoreString(studentInd, assignmentInd);
+    final state = context.read<ScoreBoardCubit>().state;
+    final scoreString = state.scoreString(studentInd, assignmentInd);
 
     // IF THE INDICES ARE OUT OF BOUNDS
-    if (scoreString == null) {
+    if (studentInd < 0 ||
+        studentInd >= state.students.length ||
+        assignmentInd < 0 ||
+        assignmentInd > state.assignments.length) {
+      // TODO: the cell is only submitting but not adequately retaining focus when enter is pressed.
+      _submit();
+
       return;
-      // setState(() {
-      //   editedStudentInd = null;
-      //   editedAssignmentInd = null;
-      // });
     }
 
     // IF THE INDICES ARE VALID
-    _submit();
+    _submitAndUnfocus();
     setState(() {
       editedStudentInd = studentInd;
       editedAssignmentInd = assignmentInd;
@@ -157,15 +160,15 @@ class _EditableScoreBoardState extends State<EditableScoreBoard> {
   // FOCUS ON A CELL
   void _focus(int studentInd, int assignmentInd) {
     // SCORE STRING OF CURRENT STUDENT AND ASSIGNMENT
-    final scoreString = context.read<ScoreBoardCubit>().state.scoreString(studentInd, assignmentInd);
+    final state = context.read<ScoreBoardCubit>().state;
+    final scoreString = state.scoreString(studentInd, assignmentInd);
 
     // IF THE INDICES ARE OUT OF BOUNDS
-    if (scoreString == null) {
+    if (studentInd < 0 ||
+        studentInd >= state.students.length ||
+        assignmentInd < 0 ||
+        assignmentInd > state.assignments.length) {
       return;
-      // setState(() {
-      //   editedStudentInd = null;
-      //   editedAssignmentInd = null;
-      // });
     }
 
     // IF THE INDICES ARE VALID
@@ -185,15 +188,19 @@ class _EditableScoreBoardState extends State<EditableScoreBoard> {
     }
   }
 
-  // SUBMIT CHANGES ON A CELL
-  void _submit() {
-    final score = double.tryParse(_cellInputController.text);
-
-    context.read<ScoreBoardCubit>().updateScore(editedStudentInd!, editedAssignmentInd!, score);
+  /// Submit changes on a cell and remove focus.
+  void _submitAndUnfocus() {
+    _submit();
 
     setState(() {
       editedStudentInd = null;
       editedAssignmentInd = null;
     });
+  }
+
+  _submit() {
+    final score = double.tryParse(_cellInputController.text);
+
+    context.read<ScoreBoardCubit>().updateScore(editedStudentInd!, editedAssignmentInd!, score);
   }
 }

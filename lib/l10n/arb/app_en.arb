@@ -85,7 +85,7 @@
     "buttonLabel_CalculateMidtermScore": "Calculate midterm score",
     "buttonLabel_CalculateFinalScore": "Calculate final score",
     "buttonLabel_PublishAsMidterm": "Publish as offical midterm score",
-    "buttonLabel_PublishAsFinal": "Publish as official midterm score",
+    "buttonLabel_PublishAsFinal": "Publish as official final score",
     "buttonLabel_ToExcel": "To Excel",
     "buttonLabel_ToPDF": "To PDF",
     "buttonLabel_PlayAgain": "Reset",
@@ -141,6 +141,13 @@
     "scoreRecordType_MidtermRecord": "Midterm",
     "scoreRecordType_FinalRecord": "Final",
 
+    "scoreRecordLabel_Course": "Course",
+    "scoreRecordLabel_Type": "Type",
+    "scoreRecordLabel_Grade": "Grade",
+    "scoreRecordLabel_Year": "Year",
+    "scoreRecordLabel_Teacher": "Teacher",
+    "scoreRecordLabel_Score": "Score",
+
     "scoreRecordLabel_NoScoresYet": "No scores yet.",
 
     "prompt_FailedToLogIn": "Failed to log in: invalid credentials.",
@@ -152,5 +159,6 @@
     "prompt_CannotSaveExcel": "Cannot save Excel: it may already be opened",
     "prompt_InsufficientAssignmentList": "Cannot publish scores: the amount of assignments are not sufficient.",
     "prompt_SessionExpired": "Your session has expired, please log in again.",
-    "prompt_ServerFailure": "There is a problem with our server, please report this problem to an admin."
+    "prompt_ServerFailure": "We are sorry, but there is a problem with our server, please report this problem to an admin.",
+    "prompt_OtherFailure": "We are sorry, but there is an unknown problem with the app, please report it to an admin."
 }

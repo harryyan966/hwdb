@@ -256,6 +256,7 @@ class ScoreBoardCubit extends Cubit<ScoreBoardState> {
         status: PageStatus.bad,
         error: Errors.insufficientAssignmentList,
       ));
+      return;
     }
 
     // Send the request to the api.
@@ -266,6 +267,14 @@ class ScoreBoardCubit extends Cubit<ScoreBoardState> {
       emit(state.copyWith(
         status: PageStatus.good,
         event: Events.publishedMidtermScore,
+      ));
+    }
+
+    // If the amount of assignments is not sufficient
+    else if (Errors.insufficientAssignmentList.matches(res['error'])) {
+      emit(state.copyWith(
+        status: PageStatus.good,
+        error: Errors.insufficientAssignmentList,
       ));
     }
 
@@ -289,6 +298,7 @@ class ScoreBoardCubit extends Cubit<ScoreBoardState> {
         status: PageStatus.bad,
         error: Errors.insufficientAssignmentList,
       ));
+      return;
     }
 
     // Send the request to the api.
@@ -299,6 +309,14 @@ class ScoreBoardCubit extends Cubit<ScoreBoardState> {
       emit(state.copyWith(
         status: PageStatus.good,
         event: Events.publishedFinalScore,
+      ));
+    }
+
+    // If the amount of assignments is not sufficient
+    else if (Errors.insufficientAssignmentList.matches(res['error'])) {
+      emit(state.copyWith(
+        status: PageStatus.good,
+        error: Errors.insufficientAssignmentList,
       ));
     }
 

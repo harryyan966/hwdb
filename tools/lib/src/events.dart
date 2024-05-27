@@ -17,12 +17,12 @@ enum Events {
   gotStudents,
   updatedCourseScore,
   updatedCourseFinalScore,
-  @Deprecated('directly update course score instead')
+  @Deprecated('Use update course score instead.')
   updatedCourseScores,
   createdAssignment,
   updatedAssignment,
   deletedAssignment,
-  @Deprecated('NO USE')
+  @Deprecated('Use update course info instead.')
   updatedCourseStudentList,
   gotStudentCourseScore,
   generatedMidtermScore,
@@ -82,7 +82,7 @@ class ValidationErrors {
   factory ValidationErrors.duplicated(DuplicationFields field) => ValidationErrors._(ValidationError.duplicated, field);
   factory ValidationErrors.invalidPassword() => ValidationErrors._(ValidationError.invalidPassword);
   factory ValidationErrors.samePasswords() => ValidationErrors._(ValidationError.samePasswords);
-  @Deprecated('USE DUPLICATE INSTEAD')
+  @Deprecated('Use ValidationErrors.duplicated instead.')
   factory ValidationErrors.sameUserNames() => ValidationErrors._(ValidationError.sameUserNames);
   factory ValidationErrors.unknown() => ValidationErrors._(ValidationError.unknown);
   factory ValidationErrors.byName(String name) => ValidationErrors.fromJson({'code': name});

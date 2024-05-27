@@ -154,3 +154,36 @@
 
 ## scoreboard arrow up down left right cannot work, focus is always elsewhere
 - do not directly unfocus, this will make focus go to things like the appbar
+
+## Routes comments
+- done
+
+## Auth comments
+- done
+
+## Users comments
+- done
+
+## Courses comments
+- done
+
+## Make courses without sufficient data unable to calculate final scores. 
+- supposedly done
+
+## Generate Midterm Scores
+- supposedly done
+
+## Don't allow publishing scores with no adequate assignments
+- supposedly done
+
+## Calculate midterm scores when publishing them
+- discarded
+
+## Try converting every enum input back to their enums in the api.
+- supposedly done
+
+## Add pulldown refresh to every list
+- supposedly done
+
+## (!) Auto-login
+- supposedly done

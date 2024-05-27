@@ -12,7 +12,7 @@ abstract class EnumString {
       UserRole.admin => l10n.userRole_Admin,
       UserRole.teacher => l10n.userRole_Teacher,
       UserRole.student => l10n.userRole_Student,
-      UserRole.none => throw Exception('VISITORS SHOULD NOT BE HERE')
+      UserRole.none => throw Exception('Empty user converted to enum string.')
     };
   }
 
@@ -25,7 +25,7 @@ abstract class EnumString {
       AssignmentType.midtermExam => l10n.assignmentType_Midterm,
       AssignmentType.finalExam => l10n.assignmentType_FinalExam,
       AssignmentType.participation => l10n.assignmentType_Participation,
-      AssignmentType.none => throw Exception('ASSIGNMENT SHOULD NOT BE EMPTY'),
+      AssignmentType.none => throw Exception('Empty assignment converted to enum string.'),
     };
   }
 
@@ -39,7 +39,7 @@ abstract class EnumString {
       Grade.g11spring => l10n.grade_G11spring,
       Grade.g12fall => l10n.grade_G12fall,
       Grade.g12spring => l10n.grade_G12spring,
-      Grade.none => throw Exception('GRADE SHOULD NOT BE EMPTY'),
+      Grade.none => throw Exception('Empty grade converted to enum string.'),
     };
   }
 

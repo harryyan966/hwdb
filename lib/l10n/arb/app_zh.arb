@@ -143,6 +143,13 @@
     "scoreRecordType_MidtermRecord": "期中",
     "scoreRecordType_FinalRecord": "期末",
 
+    "scoreRecordLabel_Course": "课程",
+    "scoreRecordLabel_Type": "类别",
+    "scoreRecordLabel_Grade": "年级",
+    "scoreRecordLabel_Year": "学年",
+    "scoreRecordLabel_Teacher": "教师",
+    "scoreRecordLabel_Score": "最终分数",
+
     "scoreRecordLabel_NoScoresYet": "暂无分数记录",
 
     "prompt_FailedToLogIn": "登录失败：用户信息错误",
@@ -154,5 +161,6 @@
     "prompt_CannotSaveExcel": "无法保存Excel：请尝试关闭文件",
     "prompt_InsufficientAssignmentList": "无法提交最终成绩: 任务数量不足",
     "prompt_SessionExpired": "登录过期，请重新登录",
-    "prompt_ServerFailure": "服务器出现问题，请与管理员联系"
+    "prompt_ServerFailure": "很抱歉，服务器出现问题，请与管理员联系",
+    "prompt_OtherFailure": "很抱歉，出现了未知错误，请与管理员联系"
 }

@@ -38,14 +38,14 @@ class StudentScoreReportView extends StatelessWidget {
       body: scoreRecords.isNotEmpty
           ? Table(
               children: [
-                const TableRow(
+                TableRow(
                   children: [
-                    TitleCell('COURSE'),
-                    TitleCell('TYPE'),
-                    TitleCell('GRADE'),
-                    TitleCell('YEAR'),
-                    TitleCell('TEACHER'),
-                    TitleCell('SCORE'),
+                    TitleCell(l10n.scoreRecordLabel_Course),
+                    TitleCell(l10n.scoreRecordLabel_Type),
+                    TitleCell(l10n.scoreRecordLabel_Grade),
+                    TitleCell(l10n.scoreRecordLabel_Year),
+                    TitleCell(l10n.scoreRecordLabel_Teacher),
+                    TitleCell(l10n.scoreRecordLabel_Score),
                   ],
                 ),
                 for (final record in scoreRecords)

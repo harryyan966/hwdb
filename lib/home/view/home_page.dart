@@ -64,7 +64,7 @@ class HomeView extends StatelessWidget {
     );
 
     final pages = switch (userRole) {
-      UserRole.none => throw Exception('EMPTY USERS SHOULD NOT BE HERE'),
+      UserRole.none => throw Exception('Empty user entered home page.'),
       UserRole.student => [coursePage, collegeCasinoPage, accountPage],
       UserRole.teacher => [coursePage, accountPage],
       UserRole.admin => [coursePage, accountPage, adminPage],
@@ -83,7 +83,9 @@ class HomeView extends StatelessWidget {
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: tabIndex,
-        onTap: (tabIndex) => context.read<HomeCubit>().setTab(tabIndex),
+        onTap: (tabIndex) {
+          context.read<HomeCubit>().setTab(tabIndex);
+        },
         items: [
           for (final page in pages)
             BottomNavigationBarItem(

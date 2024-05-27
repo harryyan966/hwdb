@@ -167,7 +167,6 @@ class _CreateCourseFormState extends State<CreateCourseForm> {
 
     // WHEN THE USER HAS FINISHED EDITING PERSONAL INFO
     if (noErrorsIn([name, year, grade, teacher])) {
-      print('NO ERRORS');
       context.read<CreateCourseCubit>().createCourse(
             name: name.newValue!,
             year: year.newValue!,
@@ -178,7 +177,6 @@ class _CreateCourseFormState extends State<CreateCourseForm> {
 
     // WHEN THERE ARE ERRORS IN THE FIELDS
     else {
-      print('HAS ERRORS');
       setState(() {});
     }
   }

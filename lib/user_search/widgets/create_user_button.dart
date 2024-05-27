@@ -14,11 +14,8 @@ class CreateUserButton extends StatelessWidget {
 
     return ElevatedButton(
       onPressed: () {
-        context.nav.push(CreateUsersPage.route()).then((user) {
-          if (user == null) {
-            throw Exception('create userS page returned null.');
-          }
-          if (user.isNotEmpty) {
+        context.nav.push(CreateUsersPage.route()).then((users) {
+          if (users != null && users.isNotEmpty) {
             return context.read<UserSearchCubit>().reLoad();
           }
         });

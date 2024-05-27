@@ -37,36 +37,49 @@ class CourseList extends StatelessWidget {
             }
 
             final course = courses[index];
-            final teacher = course.teacher;
 
             // BUILD A COURSE INFO REPRESENTATION
-            return ListTile(
-              title: Text(course.name),
-              subtitle: Text('${course.year} ${EnumString.grade(context, course.grade)}'),
-              // TEACHER PROFILE
-              trailing: TeacherProfile(teacher: teacher),
-              onTap: () {
-                final currentUser = context.read<AppCubit>().state.user;
-
-                // GO TO EDITABLE SCOREBOARD PAGE
-                if (currentUser.role.isTeacher && currentUser.id == teacher.id) {
-                  context.nav.push(EditableScoreBoardPage.route(course));
-                }
-
-                // GO TO READ-ONLY SCOREBOARD PAGE
-                else if (currentUser.role.isAdmin || currentUser.role.isTeacher) {
-                  context.nav.push(ReadOnlyScoreBoardPage.route(course));
-                }
-
-                // GO TO PERSONAL SCOREBOARD PAGE
-                else if (currentUser.role.isStudent) {
-                  context.nav.push(StudentScorePage.route(course, currentUser));
-                }
-              },
-            );
+            return CourseInfoTile(course: course);
           },
         ),
       ),
+    );
+  }
+}
+
+class CourseInfoTile extends StatelessWidget {
+  const CourseInfoTile({
+    super.key,
+    required this.course,
+  });
+
+  final CourseInfo course;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(course.name),
+      subtitle: Text('${course.year} ${EnumString.grade(context, course.grade)}'),
+      // TEACHER PROFILE
+      trailing: TeacherProfile(teacher: course.teacher),
+      onTap: () {
+        final currentUser = context.read<AppCubit>().state.user;
+
+        // GO TO EDITABLE SCOREBOARD PAGE
+        if (currentUser.role.isTeacher && currentUser.id == course.teacher.id) {
+          context.nav.push(EditableScoreBoardPage.route(course));
+        }
+
+        // GO TO READ-ONLY SCOREBOARD PAGE
+        else if (currentUser.role.isAdmin || currentUser.role.isTeacher) {
+          context.nav.push(ReadOnlyScoreBoardPage.route(course));
+        }
+
+        // GO TO PERSONAL SCOREBOARD PAGE
+        else if (currentUser.role.isStudent) {
+          context.nav.push(StudentScorePage.route(course, currentUser));
+        }
+      },
     );
   }
 }

@@ -24,20 +24,21 @@ class HwdbHttpClient {
   // LOCATES API
   final String _apiUrl;
 
+  // DETERMINES WHETHER THE CLIENT WILL PRINT RESPONSES
+  final bool _debug;
+
   // CLIENT CACHES THE TOKEN WITH THIS KEY
   static const localTokenKey = 'token';
 
   // SERVER SENDS THE TOKEN WITH THIS KEY
   static const remoteTokenKey = 'token';
 
-  // DEBUG CLIENT WILL PRINT RESPONSES
-  static const kDebug = true;
-
   HwdbHttpClient({
     required SharedPreferences localCache,
     String apiUrl = '62.234.5.130:8080',
     bool useHttps = false,
-  })  : _apiUrl = apiUrl,
+    bool debug = false,
+  })  : _debug = debug, _apiUrl = apiUrl,
         _localCache = localCache,
         _useHttps = useHttps;
 
@@ -87,6 +88,11 @@ class HwdbHttpClient {
 
     // IF NETWORK FAILED
     on SocketException {
+      throw NetworkFailure();
+    }
+
+    // IF NETWORK FAILED
+    on ClientException {
       throw NetworkFailure();
     }
   }
@@ -218,7 +224,7 @@ class HwdbHttpClient {
   }
 
   void _logResponseIfDebug(String query, Json response) {
-    if (kDebug) {
+    if (_debug) {
       log('RESPONSE FOR $query');
       log(response.pretty());
       log('----------------------------');

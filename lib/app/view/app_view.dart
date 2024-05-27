@@ -37,22 +37,6 @@ class AppView extends StatelessWidget {
       // SHOW DIALOG WHEN NETWORK FAILED
       // TODO: embed error detection in pages
       final l10n = rootNavigatorKey.currentContext!.l10n;
-      if (error is NetworkFailure) {
-        showDialog(
-          barrierDismissible: false,
-          context: rootNavigatorKey.currentContext!,
-          builder: (_) => SimpleDialog(
-            title: Text(l10n.prompt_NetworkError),
-            children: [
-              ElevatedButton(
-                onPressed: () => rootNavigatorKey.currentContext!.nav.pop(),
-                child: Text(l10n.buttonLabel_Ok),
-              ),
-            ],
-          ),
-        );
-        return true;
-      }
 
       if (error is NetworkFailure) {
         showSimpleDialog(
@@ -94,7 +78,14 @@ class AppView extends StatelessWidget {
         );
       }
 
-      showSimpleDialog(rootNavigatorKey.currentContext!, title: error.toString(), content: Text(st.toString()));
+      showSimpleDialog(rootNavigatorKey.currentContext!,
+          title: l10n.prompt_OtherFailure,
+          content: Column(
+            children: [
+              Text(error.toString()),
+              Text(st.toString()),
+            ],
+          ));
       return false;
     };
 
