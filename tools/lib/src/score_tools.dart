@@ -70,19 +70,23 @@ abstract class ScoreTools {
     // Ensure there is one and only one final exam.
     final finalExams = assignmentModels.where((e) => e.type == AssignmentType.finalExam);
     if (finalExams.length != 1) {
+      print('err1');
       throw Exception('There must be one and only one final exam after the midterm');
     }
 
     // Ensure there is one and only one participation grade.
     final participations = assignmentModels.where((e) => e.type == AssignmentType.participation);
     if (participations.length != 1) {
+      print('err2');
       throw Exception('There must be one and only one participation grade after the midterm');
     }
 
     // Ensure there is a sufficient amount of homeworks after the midterm
-    final homeworks = assignmentModels.where((e) => e.type == AssignmentType.quiz);
+    final homeworks = assignmentModels.where((e) => e.type == AssignmentType.homework);
+    print(homeworks.map((e) => e.dueDate));
 
     if (homeworks.length < AssignmentType.homework.countLimit) {
+      print('err3');
       throw Exception('The amount of homeworks after the midterm is not sufficient');
     }
 
@@ -90,6 +94,7 @@ abstract class ScoreTools {
     final quizzes = assignmentModels.where((e) => e.type == AssignmentType.quiz);
 
     if (quizzes.length < AssignmentType.quiz.countLimit) {
+      print('err4');
       throw Exception('The amount of quizzes after the midterm is not sufficient');
     }
   }
