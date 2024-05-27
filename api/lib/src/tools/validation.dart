@@ -100,31 +100,28 @@ abstract class Ensure {
       return;
     }
 
-    // Get duplicate assignments from the course.
-    final getDuplicateAssignmentsRes = await context.db.collection('courses').modernFindOne(
-      filter: {
+    // Get the amount of assignments with duplicate names.
+    final countDuplicateNameAssignmentsRes = await context.db.collection('courses').count({
+      '_id': courseId,
+      if (name != null) 'assignments.name': name,
+    });
+
+    // If a duplicate is found
+    if (countDuplicateNameAssignmentsRes != 0) {
+      throw InvalidField({'name': ValidationErrors.duplicated(DuplicationFields.assignmentName)});
+    }
+
+    // Get assignments with duplicate unique types.
+    final countDuplicateTypeAssignmentsRes = await context.db.collection('courses').count(
+      {
         '_id': courseId,
-        '\$or': [
-          if (name != null) {'assignments.name': name},
-          if (type != null && type.countLimit == 1) {'assignments.type': type.name},
-        ],
+        if (type != null && type.countLimit == 1) 'assignments.type': type.name,
       },
-      projection: {'assignments.\$': 1},
     );
 
-    // If a duplicate assignment is found
-    if (getDuplicateAssignmentsRes != null) {
-      final duplicateAssignment = getDuplicateAssignmentsRes['assignments'].first;
-
-      // If they duplicate on a name
-      if (duplicateAssignment['name'] == name) {
-        throw InvalidField({'name': ValidationErrors.duplicated(DuplicationFields.assignmentName)});
-      }
-
-      // If they duplicate on a unique type
-      else {
-        throw InvalidField({'type': ValidationErrors.duplicated(DuplicationFields.assignmentType)});
-      }
+    // If a duplicate is found
+    if (countDuplicateTypeAssignmentsRes != 0) {
+      throw InvalidField({'type': ValidationErrors.duplicated(DuplicationFields.assignmentType)});
     }
   }
 
