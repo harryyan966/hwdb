@@ -24,6 +24,8 @@ abstract class ScoreTools {
   /// VALIDATES THE LIST OF ASSIGNMENTS.
   ///
   /// ENSURES THESE ASSIGNMENTS ARE SUFFICIENT TO BE USED TO GENERATE A PUBLISHABLE MIDTERM SCORE.
+  ///
+  /// TODO: return errors instead of throwing exceptions
   static void validateAssignmentsForMidterm(List<Json> assignments) {
     final assignmentModels = assignments.map((e) => _Assignment.fromJson(e)).toList();
 
@@ -55,6 +57,8 @@ abstract class ScoreTools {
   /// Validates the list of assignments.
   ///
   /// Ensures these assignments are sufficient to be used to generate a publishable final score.
+  ///
+  /// TODO: return errors instead of throwing exceptions
   static void validateAssignmentsForFinal(List<Json> assignments) {
     // Ensure there is one and only one midterm and enough homeworks and quizzes before it.
     validateAssignmentsForMidterm(assignments);
