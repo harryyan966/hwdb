@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:client_tools/client_tools.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:hw_dashboard/l10n/l10n.dart';
 
 class CollegeCasinoSection extends StatelessWidget {
@@ -222,12 +221,12 @@ class _RandomCardState extends State<RandomCard> with TickerProviderStateMixin {
   void _initializeAnimation() {
     _backController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 1),
+      duration: const Duration(milliseconds: 300),
     );
 
     _frontController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 1),
+      duration: const Duration(milliseconds: 300),
     );
 
     _backAnimation = Tween<double>(

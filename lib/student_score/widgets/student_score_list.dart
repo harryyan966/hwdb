@@ -26,29 +26,32 @@ class StudentScoreList extends StatelessWidget {
             : Column(
                 children: [
                   Expanded(
-                    child: Table(
-                      children: [
-                        TableRow(
-                          children: [
-                            LegendCell(l10n.scoreBoardLabel_Assignment),
-                            TitleCell(l10n.scoreBoardLabel_AssignmentType, fillColor: colorScheme.secondaryContainer),
-                            TitleCell(l10n.scoreBoardLabel_DueDate, fillColor: colorScheme.secondaryContainer),
-                            TitleCell(l10n.scoreBoardLabel_Score, fillColor: colorScheme.primaryContainer),
-                          ],
-                        ),
-                        for (final assignment in assignments)
+                    child: SingleChildScrollView(
+                      child: Table(
+                        children: [
                           TableRow(
                             children: [
-                              TitleCell(assignment.name,
-                                  fillColor: colorScheme.secondaryContainer, height: Cell.standardHeight),
-                              ContentCell(EnumString.assignmentType(context, assignment.type)),
-                              ContentCell(DateFormat.yMd().format(assignment.dueDate)),
-                              ScoreCell(score: scores[assignment.id]),
+                              LegendCell(l10n.scoreBoardLabel_Assignment),
+                              TitleCell(l10n.scoreBoardLabel_AssignmentType, fillColor: colorScheme.secondaryContainer),
+                              TitleCell(l10n.scoreBoardLabel_DueDate, fillColor: colorScheme.secondaryContainer),
+                              TitleCell(l10n.scoreBoardLabel_Score, fillColor: colorScheme.primaryContainer),
                             ],
-                          )
-                      ],
+                          ),
+                          for (final assignment in assignments)
+                            TableRow(
+                              children: [
+                                TitleCell(assignment.name,
+                                    fillColor: colorScheme.secondaryContainer, height: Cell.standardHeight),
+                                ContentCell(EnumString.assignmentType(context, assignment.type)),
+                                ContentCell(DateFormat.yMd().format(assignment.dueDate)),
+                                ScoreCell(score: scores[assignment.id]),
+                              ],
+                            )
+                        ],
+                      ),
                     ),
                   ),
+                  const SizedBox(height: Spacing.m),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [

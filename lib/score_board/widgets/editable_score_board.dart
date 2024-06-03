@@ -112,7 +112,8 @@ class _EditableScoreBoardState extends State<EditableScoreBoard> {
                       controller: _cellInputController,
                       // SUBMIT THE CURRENT CELL CHANGE AND FOCUS ON THE NEXT CELL
                       onSubmit: (value) {
-                        _submitAndFocus(studentInd + 1, assignmentInd);
+                        _submitAndUnfocus();
+                        _focus(studentInd + 1, assignmentInd);
                       },
                       // SUBMIT THE CURRENT CELL CHANGE ONLY
                       onTapOutside: (_) => _submitAndUnfocus(),
@@ -135,14 +136,12 @@ class _EditableScoreBoardState extends State<EditableScoreBoard> {
         studentInd >= state.students.length ||
         assignmentInd < 0 ||
         assignmentInd > state.assignments.length) {
-      // TODO: the cell is only submitting but not adequately retaining focus when enter is pressed.
       _submit();
-
       return;
     }
 
     // IF THE INDICES ARE VALID
-    _submitAndUnfocus();
+    _submit();
     setState(() {
       editedStudentInd = studentInd;
       editedAssignmentInd = assignmentInd;
