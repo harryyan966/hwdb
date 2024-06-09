@@ -40,7 +40,7 @@ Future<Response> deleteUser(RequestContext context, Id userId) async {
         '\$pull': {'studentIds': deletedUser.id}
       },
     );
-    Ensure.hasNoWriteErrors(deleteStudentRes);
+    await Ensure.hasNoWriteErrors(deleteStudentRes);
   }
 
   // If the deleted user is a teacher
@@ -49,7 +49,7 @@ Future<Response> deleteUser(RequestContext context, Id userId) async {
     final deleteTeacherCourseRes = await context.db.collection('courses').deleteMany(
       {'teacherId': deletedUser.id},
     );
-    Ensure.hasNoWriteErrors(deleteTeacherCourseRes);
+    await Ensure.hasNoWriteErrors(deleteTeacherCourseRes);
   }
 
   // Send response.

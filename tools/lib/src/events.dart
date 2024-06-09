@@ -41,6 +41,7 @@ enum Events {
 
 enum Errors {
   none,
+  loginBanned,
   invalidCredentials,
   validationError,
   methodNotAllowed,

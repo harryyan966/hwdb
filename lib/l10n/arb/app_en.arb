@@ -150,7 +150,8 @@
 
     "scoreRecordLabel_NoScoresYet": "No scores yet.",
 
-    "prompt_FailedToLogIn": "Failed to log in: invalid credentials.",
+    "prompt_InvalidCredentialsOnLogin": "Failed to log in: invalid credentials.",
+    "prompt_LoginBanned": "Failed to log in: login banned. (probably due to multiple unsuccessful login attempts)",
     "prompt_NetworkError": "Please reconnect to the internet",
     "prompt_EmptyRequest": "The request is empty.",
     "prompt_CreatedUser": "Created user.",

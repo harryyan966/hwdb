@@ -48,6 +48,7 @@ abstract class AuthTools {
       return (context) {
         final token = _getToken(context);
         final userId = _decodeToken(token);
+        print(context.request.connectionInfo.remoteAddress); // TODO: add to server
         return handler(context.provide<Id?>(() => userId));
       };
     };

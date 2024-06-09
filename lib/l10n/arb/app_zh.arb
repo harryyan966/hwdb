@@ -152,7 +152,8 @@
 
     "scoreRecordLabel_NoScoresYet": "暂无分数记录",
 
-    "prompt_FailedToLogIn": "登录失败：用户信息错误",
+    "prompt_InvalidCredentialsOnLogin": "登录失败：用户信息错误",
+    "prompt_LoginBanned": "登录失败：服务器拒绝登录（可能因为多次输入错误密码）",
     "prompt_NetworkError": "请尝试重新连接网络",
     "prompt_EmptyRequest": "请求失败：无信息更改",
     "prompt_CreatedUser": "成功创建用户",

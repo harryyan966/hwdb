@@ -86,6 +86,15 @@ class LoginCubit extends Cubit<LoginState> {
       ));
     }
 
+    // IF THE SERVER BANNED YOU FROM LOGGING IN
+    else if (Errors.loginBanned.matches(res['error'])) {
+      emit(state.copyWith(
+        status: PageStatus.bad,
+        error: Errors.loginBanned,
+        validationError: const {},
+      ));
+    }
+
     // THROW THE UNEXPECTED RESULT
     else {
       emit(state.copyWith(status: PageStatus.bad));

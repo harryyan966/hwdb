@@ -60,7 +60,15 @@ class _LoginFormState extends State<LoginForm> {
         BlocListener<LoginCubit, LoginState>(
           listenWhen: (previous, current) => current.error == Errors.invalidCredentials,
           listener: (context, state) {
-            showSimpleDialog(context, title: l10n.prompt_FailedToLogIn);
+            showSimpleDialog(context, title: l10n.prompt_InvalidCredentialsOnLogin);
+          },
+        ),
+
+        // WHEN THE USER IS BANNED FROM LOGIN
+        BlocListener<LoginCubit, LoginState>(
+          listenWhen: (previous, current) => current.error == Errors.loginBanned,
+          listener: (context, state) {
+            showSimpleDialog(context, title: l10n.prompt_LoginBanned);
           },
         ),
       ],
