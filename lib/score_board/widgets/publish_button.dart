@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hw_dashboard/l10n/l10n.dart';
 import 'package:hw_dashboard/score_board/score_board.dart';
 
-class ScoresButton extends StatelessWidget {
-  const ScoresButton({super.key});
+class PublishButton extends StatelessWidget {
+  const PublishButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,16 +17,8 @@ class ScoresButton extends StatelessWidget {
       itemBuilder: (BuildContext context) {
         return [
           PopupMenuItem(
-            onTap: () => context.read<ScoreBoardCubit>().generateMidtermScores(),
-            child: Text(l10n.buttonLabel_CalculateMidtermScore),
-          ),
-          PopupMenuItem(
             onTap: () => context.read<ScoreBoardCubit>().publishAsMidtermScore(),
             child: Text(l10n.buttonLabel_PublishAsMidterm),
-          ),
-          PopupMenuItem(
-            onTap: () => context.read<ScoreBoardCubit>().generateFinalScores(),
-            child: Text(l10n.buttonLabel_CalculateFinalScore),
           ),
           PopupMenuItem(
             onTap: () => context.read<ScoreBoardCubit>().publishAsFinalScore(),
@@ -37,7 +29,7 @@ class ScoresButton extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(Spacing.m),
         child: Text(
-          l10n.scoreBoardLabel_Score,
+          l10n.scoreBoardLabel_Publish,
           style: Theme.of(context).textTheme.labelLarge,
         ),
       ),

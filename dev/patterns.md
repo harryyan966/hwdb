@@ -34,6 +34,6 @@
 
 - repetition makes independence
 
-- explanatory/imperative comments start with `Ensure`, `Get`, `Validate`, `Save`, `Write`, `Return`, `If`, `Update`, `Calculate`, `Send`, `Delete`, `Construct`, `Convert`, `Determine`.
+- explanatory/imperative comments start with `Ensure`, `Get`, `Validate`, `Save`, `Write`, `Return`, `If`, `Update`, `Calculate`, `Send`, `Delete`, `Construct`, `Convert`, `Determine`, `Sort`.
 
 - labeling comments should be full upper case (eg. `USER NAME TEXTFIELD`)

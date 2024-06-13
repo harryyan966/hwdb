@@ -64,7 +64,8 @@ class EditableScoreBoardView extends StatelessWidget {
           actions: hasStudents
               ? const [
                   AddButton(),
-                  ScoresButton(),
+                  CalculateButton(),
+                  PublishButton(),
                   ExportButton(),
                   SizedBox(width: Spacing.m),
                 ]

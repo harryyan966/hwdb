@@ -113,6 +113,8 @@
     "scoreBoardLabel_Assignment": "Assignment",
     "scoreBoardLabel_AssignmentType": "Assignment Type",
     "scoreBoardLabel_DueDate": "Due date",
+    "scoreBoardLabel_Calculate": "Calculate",
+    "scoreBoardLabel_Publish": "Publish",
     "scoreBoardLabel_Score": "Score",
     "scoreBoardLabel_FinalScore": "Final score",
     "scoreBoardLabel_AverageScore": "Average score",

@@ -7,6 +7,9 @@ class ScoreBoardState extends Equatable {
   final Errors error;
   final Map<String, Map<String, double?>> scores;
   final Map<String, double?> finalScores;
+  final bool sortByName;
+  final String? sortedAssignment;
+  final bool reverseSort;
   final List<User> students;
   final List<Assignment> assignments;
 
@@ -16,18 +19,65 @@ class ScoreBoardState extends Equatable {
     this.error = Errors.none,
     this.scores = const {},
     this.finalScores = const {},
+    this.sortByName = true,
+    this.sortedAssignment,
+    this.reverseSort = false,
     this.students = const [],
     this.assignments = const [],
   });
 
-  /// Students sorted by name.
-  List<User> get sortedStudents => students.isEmpty ? [] : students
-    ..sort((a, b) => a.name.compareTo(b.name));
+  /// Students sorted according to the rules provided (name, assignment, reverse).
+  List<User> get sortedStudents {
+    if (students.isEmpty) {
+      return []; // When the list is initialized, it is const and cannot be sorted.
+    }
+
+    // Sort students by name.
+    // TODO: will this sorting preference remain after another sort (perhaps by score)?
+    students.sort((a, b) => a.name.compareTo(b.name));
+
+    // If students are sorted by name
+    if (sortByName) {
+      // Sort by name only.
+      return reverseSort ? students.reversed.toList() : students;
+    }
+    // If students are sorted by score
+    else {
+      // If the user provided an assignment to sort on
+      if (sortedAssignment != null) {
+        // If the assignment exists
+        if (assignments.any((e) => e.id == sortedAssignment)) {
+          // Sort by scores of this assignment.
+          return students
+            ..sort((a, b) {
+              final scoreA = scores[a.id]?[sortedAssignment] ?? -1;
+              final scoreB = scores[b.id]?[sortedAssignment] ?? -1;
+              return reverseSort ? scoreB.compareTo(scoreA) : scoreA.compareTo(scoreB);
+            });
+        }
+        // If the assignment does not exist
+        else {
+          // Sort by name only.
+          return reverseSort ? students.reversed.toList() : students;
+        }
+      }
+      // If the user did not provide an assignment to sort on
+      else {
+        // Sort by final score.
+        return students
+          ..sort((a, b) {
+            final scoreA = finalScores[a.id] ?? -1;
+            final scoreB = finalScores[b.id] ?? -1;
+            return reverseSort ? scoreB.compareTo(scoreA) : scoreA.compareTo(scoreB);
+          });
+      }
+    }
+  }
 
   /// Assignments sorted by due date first and name second.
   List<Assignment> get sortedAssignments => assignments.isEmpty ? [] : assignments
     ..sort((a, b) {
-      // Return date comparison first and name comparison second.
+      // Sort by date first and name second.
       final dateComparison = b.dueDate.compareTo(a.dueDate);
       if (dateComparison != 0) return dateComparison;
       return a.name.compareTo(b.name);
@@ -97,7 +147,9 @@ class ScoreBoardState extends Equatable {
     Map<String, Map<String, double?>>? scores,
     Map<String, double?>? finalScores,
     Map<String, double?>? averageScores,
-    double? Function()? averageFinalScore,
+    bool? sortByName,
+    String? Function()? sortedAssignment,
+    bool? reverseSort,
     List<User>? students,
     List<Assignment>? assignments,
   }) {
@@ -107,11 +159,15 @@ class ScoreBoardState extends Equatable {
       error: error ?? Errors.none,
       scores: scores ?? this.scores,
       finalScores: finalScores ?? this.finalScores,
+      sortByName: sortByName ?? this.sortByName,
+      sortedAssignment: sortedAssignment == null ? this.sortedAssignment : sortedAssignment(),
+      reverseSort: reverseSort ?? this.reverseSort,
       students: students ?? this.students,
       assignments: assignments ?? this.assignments,
     );
   }
 
   @override
-  List<Object?> get props => [status, event, error, scores, finalScores, students, assignments];
+  List<Object?> get props =>
+      [status, event, error, scores, finalScores, sortByName, sortedAssignment, reverseSort, students, assignments];
 }
