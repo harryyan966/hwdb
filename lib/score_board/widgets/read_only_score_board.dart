@@ -54,8 +54,12 @@ class _ReadOnlyScoreBoardState extends State<ReadOnlyScoreBoard> {
         },
 
         // ROWS (STUDENTS)
-        rowsLength: students.length,
+        rowsLength: students.length + 1,
         rowsTitleBuilder: (index) {
+          if (index == students.length) {
+            return TitleCell(l10n.scoreBoardLabel_AverageScore, fillColor: colorScheme.primaryContainer);
+          }
+
           final student = students[index];
 
           return GestureDetector(
@@ -66,7 +70,7 @@ class _ReadOnlyScoreBoardState extends State<ReadOnlyScoreBoard> {
 
         // SCORE
         contentCellBuilder: (assignmentInd, studentInd) {
-          return ScoreCell(score: state.score(studentInd, assignmentInd));
+          return ScoreCell(score: state.displayedScore(studentInd, assignmentInd));
         },
       ),
     );

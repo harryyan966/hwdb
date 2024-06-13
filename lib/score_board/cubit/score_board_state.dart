@@ -20,56 +20,75 @@ class ScoreBoardState extends Equatable {
     this.assignments = const [],
   });
 
-  bool isValidFocus(int studentInd, int assignmentInd) {
-    if (studentInd < 0 || studentInd >= students.length) {
-      return false;
-    }
-    if (assignmentInd < 0 || assignmentInd >= assignments.length) {
-      return false;
-    }
-    return true;
-  }
+  /// Students sorted by name.
+  List<User> get sortedStudents => students.isEmpty ? [] : students
+    ..sort((a, b) => a.name.compareTo(b.name));
 
+  /// Assignments sorted by due date first and name second.
+  List<Assignment> get sortedAssignments => assignments.isEmpty ? [] : assignments
+    ..sort((a, b) {
+      // Return date comparison first and name comparison second.
+      final dateComparison = b.dueDate.compareTo(a.dueDate);
+      if (dateComparison != 0) return dateComparison;
+      return a.name.compareTo(b.name);
+    });
+
+  /// Gets student id from student index.
   String? studentId(int studentInd) {
-    if (studentInd < 0 || studentInd >= students.length) {
+    if (studentInd < 0 || studentInd > students.length) {
+      throw Exception('Student index out of bounds.');
+    }
+    // If concerning average score
+    if (studentInd == students.length) {
       return null;
     }
     return sortedStudents[studentInd].id;
   }
 
+  /// Gets assignment id from assignment index.
   String? assignmentId(int assignmentInd) {
-    if (assignmentInd < 0 || assignmentInd >= assignments.length) {
+    if (assignmentInd < 0 || assignmentInd > assignments.length) {
+      throw Exception('Assignment index out of bounds.');
+    }
+    // If concerning final score
+    if (assignmentInd == assignments.length) {
       return null;
     }
     return sortedAssignments[assignmentInd].id;
   }
 
-  double? score(int studentInd, int assignmentInd) {
+  /// Gets score from student and assignment index.
+  double? displayedScore(int studentInd, int assignmentInd) {
     final sid = studentId(studentInd);
-    if (sid == null) {
-      return null;
-    }
+    final aid = assignmentId(assignmentInd);
 
-    if (assignmentInd == assignments.length) {
+    // If getting average final score
+    if (sid == null && aid == null) {
+      final average = ScoreTools.avg(finalScores.values);
+      return average == null ? null : ScoreTools.toOneDecimalPlace(average);
+    }
+    // If getting average score of assignment
+    else if (sid == null) {
+      final average = ScoreTools.avg([for (final student in students) scores[student.id]?[aid]]);
+      return average == null ? null : ScoreTools.toOneDecimalPlace(average);
+    }
+    // If getting final score of stuent
+    else if (aid == null) {
       return finalScores[sid];
     }
-
-    final aid = assignmentId(assignmentInd);
-    if (aid == null) {
-      return null;
+    // If getting score of student and assignment
+    else {
+      return scores[sid]?[aid];
     }
+  }
 
-    return scores[sid]?[aid];
+  bool canFocus(int studentInd, int assignmentInd) {
+    return studentInd >= 0 && studentInd < students.length && assignmentInd >= 0 && assignmentInd <= assignments.length;
   }
 
   String scoreString(int studentInd, int assignmentInd) {
-    return score(studentInd, assignmentInd)?.toString() ?? '';
+    return displayedScore(studentInd, assignmentInd)?.toString() ?? '';
   }
-
-  List<User> get sortedStudents => students.isEmpty ? [] : students
-    ..sort((a, b) => a.name.compareTo(b.name));
-  List<Assignment> get sortedAssignments => assignments.isEmpty ? [] : assignments
-    ..sort((a, b) => b.dueDate.compareTo(a.dueDate));
 
   ScoreBoardState copyWith({
     PageStatus? status,
@@ -77,6 +96,8 @@ class ScoreBoardState extends Equatable {
     Errors? error,
     Map<String, Map<String, double?>>? scores,
     Map<String, double?>? finalScores,
+    Map<String, double?>? averageScores,
+    double? Function()? averageFinalScore,
     List<User>? students,
     List<Assignment>? assignments,
   }) {
@@ -92,5 +113,5 @@ class ScoreBoardState extends Equatable {
   }
 
   @override
-  List<Object> get props => [status, event, error, scores, finalScores, students, assignments];
+  List<Object?> get props => [status, event, error, scores, finalScores, students, assignments];
 }

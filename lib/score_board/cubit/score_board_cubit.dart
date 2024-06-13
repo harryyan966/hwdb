@@ -51,7 +51,7 @@ class ScoreBoardCubit extends Cubit<ScoreBoardState> {
   /// Updates a score by student and assignment indices.
   Future<void> updateScore(int studentInd, int assignmentInd, double? score) async {
     // If the score is not changed
-    if (state.score(studentInd, assignmentInd) == score) {
+    if (state.displayedScore(studentInd, assignmentInd) == score) {
       return;
     }
 
@@ -400,7 +400,7 @@ class ScoreBoardCubit extends Cubit<ScoreBoardState> {
       for (int j = 0; j < state.sortedAssignments.length + 1; j++) {
         // ASSIGNMENT AND FINAL SCORES
         final cell = sheet.cell(ex.CellIndex.indexByColumnRow(columnIndex: j + 1, rowIndex: i + 1));
-        final score = state.score(i, j);
+        final score = state.displayedScore(i, j);
         cell.value = score == null ? ex.TextCellValue(l10n.scoreBoardLabel_EmptyScore) : ex.DoubleCellValue(score);
         cell.cellStyle = baseStyle.copyWith(
           backgroundColorHexVal: score == null ? ex.ExcelColor.fromInt(colorScheme.errorContainer.value) : null,

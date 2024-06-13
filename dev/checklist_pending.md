@@ -18,8 +18,6 @@
 
 ## Make Every course contain a non-removable participation, midterm, and final exam. 
 
-## Test real-world loading behavior with latency
-
 ## (!!) Don't allow brute forcing passwords
 
 ## Midterm and final mode in course score board
@@ -34,12 +32,14 @@
 
 ## Divide more clearly between the uses of page, view, and individual widgets
 
-## Only show courses of current year and semester in course search page if `all` is not specified.
+## (!) Only show courses of current year and semester in course search page if `all` is not specified. (or sort by year and semester first)
 
-## Search by year and semester in course search pages
+## (!) Search by year and semester in course search pages
 
 ## Make final scores editable.
 
-## (?) Make `deletes` `removes`
+## (?) Make `deletes` `removes` in function names
 
 ## (?) Check if there are no nulls in the scores when validating assignment list for grade-publishing.
+
+## Merge editable scoreboard and readonly scoreboard

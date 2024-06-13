@@ -104,6 +104,8 @@ abstract class ScoreTools {
   }
 
   static Scores computeMidtermScores(List<Json> assignments, MultiScores courseScores) {
+    print(assignments.pretty());
+
     final finalScores = Scores();
     for (final entry in courseScores.entries) {
       final studentId = entry.key;
@@ -114,6 +116,9 @@ abstract class ScoreTools {
   }
 
   static Scores computeFinalScores(List<Json> assignments, MultiScores courseScores) {
+    print(assignments);
+    print(courseScores);
+
     final finalScores = Scores();
     for (final entry in courseScores.entries) {
       final studentId = entry.key;
@@ -165,8 +170,7 @@ abstract class ScoreTools {
 
     // Compute score sum and weight sum.
     if (homeworks.isNotEmpty) {
-      final scoreAverage = _avg(homeworks.map((e) => scores[e.id]!));
-      assert(!scoreAverage.isNaN);
+      final scoreAverage = avg(homeworks.map((e) => scores[e.id]!))!;
       weightedScoreAverageSum += scoreAverage * AssignmentType.homework.weight;
       weightSum += AssignmentType.homework.weight;
     }
@@ -178,8 +182,7 @@ abstract class ScoreTools {
 
     // Compute score sum and weight sum.
     if (quizzes.isNotEmpty) {
-      final scoreAverage = _avg(quizzes.map((e) => scores[e.id]!));
-      assert(!scoreAverage.isNaN);
+      final scoreAverage = avg(quizzes.map((e) => scores[e.id]!))!;
       weightedScoreAverageSum += scoreAverage * AssignmentType.quiz.weight;
       weightSum += AssignmentType.quiz.weight;
     }
@@ -243,25 +246,23 @@ abstract class ScoreTools {
 
     // If there is no midterm exam
     if (midtermExam == null) {
-      // Take the homeworks.
+      // Get the homeworks.
       final homeworks =
           assignmentModels.where((e) => e.type == AssignmentType.homework).take(AssignmentType.homework.countLimit);
 
-      // Compute score sum and weight sum.
+      // Compute homework score sum and weight sum.
       if (homeworks.isNotEmpty) {
-        final scoreAverage = _avg(homeworks.map((e) => scores[e.id]!));
-        assert(!scoreAverage.isNaN);
+        final scoreAverage = avg(homeworks.map((e) => scores[e.id]!))!;
         weightedScoreAverageSum += scoreAverage * AssignmentType.homework.weight;
         weightSum += AssignmentType.homework.weight;
       }
 
-      // Take the quizzes.
+      // Get the quizzes.
       final quizzes = assignmentModels.where((e) => e.type == AssignmentType.quiz).take(AssignmentType.quiz.countLimit);
 
-      // Compute score sum and weight sum.
+      // Compute quiz score sum and weight sum.
       if (quizzes.isNotEmpty) {
-        final scoreAverage = _avg(quizzes.map((e) => scores[e.id]!));
-        assert(!scoreAverage.isNaN);
+        final scoreAverage = avg(quizzes.map((e) => scores[e.id]!))!;
         weightedScoreAverageSum += scoreAverage * AssignmentType.quiz.weight;
         weightSum += AssignmentType.quiz.weight;
       }
@@ -269,73 +270,83 @@ abstract class ScoreTools {
 
     // If there is a midterm exam
     else {
-      // Take the homeworks.
+      // Get the homeworks before midterm.
       final homeworksBeforeMidterm = assignmentModels
           .where((e) => e.type == AssignmentType.homework && !e.dueDate.isAfter(midtermExam.dueDate))
           .take(AssignmentType.homework.countLimit);
 
+      // Get the homeworks after midterm.
       final homeworksAfterMidterm = assignmentModels
           .where((e) => e.type == AssignmentType.homework && e.dueDate.isAfter(midtermExam.dueDate))
           .take(AssignmentType.homework.countLimit);
 
+      // Get all homeworks.
       final homeworks = [...homeworksBeforeMidterm, ...homeworksAfterMidterm];
 
-      // Compute score sum and weight sum.
+      // Compute homework score sum and weight sum.
       if (homeworks.isNotEmpty) {
-        final scoreAverage = _avg(homeworks.map((e) => scores[e.id]!));
-        assert(!scoreAverage.isNaN);
+        final scoreAverage = avg(homeworks.map((e) => scores[e.id]!))!;
         weightedScoreAverageSum += scoreAverage * AssignmentType.homework.weight;
         weightSum += AssignmentType.homework.weight;
       }
 
-      // Take the quizzes.
+      // Get the quizzes before midterm.
       final quizzesBeforeMidterm = assignmentModels
           .where((e) => e.type == AssignmentType.quiz && !e.dueDate.isAfter(midtermExam.dueDate))
           .take(AssignmentType.quiz.countLimit);
 
+      // Get the quizzes after midterm.
       final quizzesAfterMidterm = assignmentModels
           .where((e) => e.type == AssignmentType.quiz && e.dueDate.isAfter(midtermExam.dueDate))
           .take(AssignmentType.quiz.countLimit);
 
+      // Get all quizzes.
       final quizzes = [...quizzesBeforeMidterm, ...quizzesAfterMidterm];
 
-      // Compute score sum and weight sum.
+      // Compute quiz score sum and weight sum.
       if (quizzes.isNotEmpty) {
-        final scoreAverage = _avg(quizzes.map((e) => scores[e.id]!));
-        assert(!scoreAverage.isNaN);
+        final scoreAverage = avg(quizzes.map((e) => scores[e.id]!))!;
         weightedScoreAverageSum += scoreAverage * AssignmentType.quiz.weight;
         weightSum += AssignmentType.quiz.weight;
       }
 
-      // Compute score sum and weight sum with the midterm.
+      // Compute midterm score sum and weight sum.
       weightedScoreAverageSum += scores[midtermExam.id]! * AssignmentType.midtermExam.weight;
       weightSum += AssignmentType.midtermExam.weight;
-
-      // Take the final exam and compute score sum and weight sum with it.
-      final finalExam = assignmentModels.where((e) => e.type == AssignmentType.finalExam).firstOrNull;
-      if (finalExam != null) {
-        weightedScoreAverageSum += scores[finalExam.id]! * AssignmentType.finalExam.weight;
-        weightSum += AssignmentType.finalExam.weight;
-      }
-
-      // Take the participation grade and compute score sum and weight sum with it.
-      final participation = assignmentModels.where((e) => e.type == AssignmentType.participation).firstOrNull;
-      if (participation != null) {
-        weightedScoreAverageSum += scores[participation.id]! * AssignmentType.participation.weight;
-        weightSum += AssignmentType.participation.weight;
-      }
     }
 
-    // If there are no assignments
+    // Get the final exam and compute final exam score sum and weight sum.
+    final finalExam = assignmentModels.where((e) => e.type == AssignmentType.finalExam).firstOrNull;
+    if (finalExam != null) {
+      weightedScoreAverageSum += scores[finalExam.id]! * AssignmentType.finalExam.weight;
+      weightSum += AssignmentType.finalExam.weight;
+    }
+
+    // Get the participation grade and compute participation score sum and weight sum.
+    final participation = assignmentModels.where((e) => e.type == AssignmentType.participation).firstOrNull;
+    if (participation != null) {
+      weightedScoreAverageSum += scores[participation.id]! * AssignmentType.participation.weight;
+      weightSum += AssignmentType.participation.weight;
+    }
+
+    // If there are no weights (there are no assignments)
     if (weightSum == 0) {
       return null;
     }
 
     // Return the score with one decimal precision.
-    return double.parse((weightedScoreAverageSum / weightSum).toStringAsFixed(1));
+    return toOneDecimalPlace(weightedScoreAverageSum / weightSum);
   }
 
-  static double _avg(Iterable<double> arr) {
-    return arr.fold(0.0, (p, c) => p + c) / arr.length;
+  static double toOneDecimalPlace(double val) {
+    return double.parse(val.toStringAsFixed(1));
+  }
+
+  static double? avg(Iterable<double?> arr) {
+    final arrWithoutNull = arr.where((e) => e != null);
+    if (arrWithoutNull.isEmpty) {
+      return null;
+    }
+    return arrWithoutNull.fold(0.0, (p, c) => p + c!) / arrWithoutNull.length;
   }
 }

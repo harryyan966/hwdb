@@ -117,6 +117,7 @@
     "scoreBoardLabel_DueDate": "截止日期",
     "scoreBoardLabel_Score": "分数",
     "scoreBoardLabel_FinalScore": "最终分数",
+    "scoreBoardLabel_AverageScore": "平均分数",
     "scoreboardLabel_DueBy": "截止日期： {date}",
     "@scoreboardLabel_DueBy": {"placeholders": {"date": {"type": "DateTime","format": "yMd"}}},
     "scoreboardLabel_UnofficialMidtermScore": "非官方期中成绩：{score}",

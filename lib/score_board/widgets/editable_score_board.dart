@@ -32,6 +32,7 @@ class _EditableScoreBoardState extends State<EditableScoreBoard> {
     final assignments = context.select((ScoreBoardCubit cubit) => cubit.state.sortedAssignments);
     final students = context.select((ScoreBoardCubit cubit) => cubit.state.sortedStudents);
     final course = context.read<ScoreBoardCubit>().courseInfo;
+
     final colorScheme = Theme.of(context).colorScheme;
     final l10n = context.l10n;
 
@@ -74,8 +75,12 @@ class _EditableScoreBoardState extends State<EditableScoreBoard> {
         },
 
         // ROWS (STUDENTS)
-        rowsLength: students.length,
+        rowsLength: students.length + 1,
         rowsTitleBuilder: (index) {
+          if (index == students.length) {
+            return TitleCell(l10n.scoreBoardLabel_AverageScore, fillColor: colorScheme.primaryContainer);
+          }
+
           final student = students[index];
 
           return GestureDetector(
@@ -119,7 +124,7 @@ class _EditableScoreBoardState extends State<EditableScoreBoard> {
                       onTapOutside: (_) => _submitAndUnfocus(),
                     ),
                   )
-                : ScoreCell(score: state.score(studentInd, assignmentInd)),
+                : ScoreCell(score: state.displayedScore(studentInd, assignmentInd)),
           );
         },
       ),
@@ -131,11 +136,8 @@ class _EditableScoreBoardState extends State<EditableScoreBoard> {
     final state = context.read<ScoreBoardCubit>().state;
     final scoreString = state.scoreString(studentInd, assignmentInd);
 
-    // IF THE INDICES ARE OUT OF BOUNDS
-    if (studentInd < 0 ||
-        studentInd >= state.students.length ||
-        assignmentInd < 0 ||
-        assignmentInd > state.assignments.length) {
+    // IF THE NEW INDEX CANNOT BE FOCUSED ON
+    if (!state.canFocus(studentInd, assignmentInd)) {
       _submit();
       return;
     }
@@ -162,11 +164,8 @@ class _EditableScoreBoardState extends State<EditableScoreBoard> {
     final state = context.read<ScoreBoardCubit>().state;
     final scoreString = state.scoreString(studentInd, assignmentInd);
 
-    // IF THE INDICES ARE OUT OF BOUNDS
-    if (studentInd < 0 ||
-        studentInd >= state.students.length ||
-        assignmentInd < 0 ||
-        assignmentInd > state.assignments.length) {
+    // IF THE NEW INDEX CANNOT BE FOCUSED ON
+    if (!state.canFocus(studentInd, assignmentInd)) {
       return;
     }
 

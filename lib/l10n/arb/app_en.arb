@@ -115,6 +115,7 @@
     "scoreBoardLabel_DueDate": "Due date",
     "scoreBoardLabel_Score": "Score",
     "scoreBoardLabel_FinalScore": "Final score",
+    "scoreBoardLabel_AverageScore": "Average score",
     "scoreboardLabel_DueBy": "Due date: {date}",
     "@scoreboardLabel_DueBy": {"placeholders": {"date": {"type": "DateTime","format": "yMMMMEEEEd"}}},
     "scoreboardLabel_UnofficialMidtermScore": "Unofficial midterm score: {score}",
