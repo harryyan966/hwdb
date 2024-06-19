@@ -1,6 +1,6 @@
 # hw_dashboard
 
-A school service platform built by and used by students.
+A school service platform built by HW students.
 
 ## Why?
 
