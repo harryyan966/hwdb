@@ -13,7 +13,7 @@ class _AppLightTheme {
         fontFamilyFallback: ['Arial'],
       );
 
-  Color get _seedColor => Colors.yellow;
+  Color get _seedColor => Colors.deepPurple;
 
   ColorScheme get _colorScheme => ColorScheme.fromSeed(
         seedColor: _seedColor,
