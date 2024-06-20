@@ -40,9 +40,6 @@ Future<Response> createCourse(RequestContext context) async {
     throw Exception('Nothing was created.');
   }
 
-  print(createCourseRes.id);
-  print(createCourseRes.id.runtimeType);
-
   // Get new course info that is to be sent back to the client.
   final getNewCourseRes = await context.db.collection('courses').modernAggregate([
     {

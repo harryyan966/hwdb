@@ -315,7 +315,7 @@ abstract class ScoreTools {
       weightedScoreAverageSum += scores[finalExam.id]! * AssignmentType.finalExam.weight;
       weightSum += AssignmentType.finalExam.weight;
     }
-
+    
     // Get the participation grade and compute participation score sum and weight sum.
     final participation = assignmentModels.where((e) => e.type == AssignmentType.participation).firstOrNull;
     if (participation != null) {
@@ -343,4 +343,18 @@ abstract class ScoreTools {
     }
     return arrWithoutNull.fold(0.0, (p, c) => p + c!) / arrWithoutNull.length;
   }
+}
+
+void main() {
+  final assignments = [
+    {'id': '6673d082ef22aeb67c000000', 'name': '作业1', 'type': 'quiz', 'dueDate': '2024-06-20T00:00:00.000'},
+    {'id': '6673d08fef22afb67c000000', 'name': '期末考试', 'type': 'finalExam', 'dueDate': '2024-06-26T00:00:00.000'}
+  ];
+  final scores = {
+    '6673c31def22a6b67c000000': {'6673d082ef22aeb67c000000': 100.0, '6673d08fef22afb67c000000': 90.0},
+    '6673c30fef22a5b67c000000': {'6673d082ef22aeb67c000000': 100.0, '6673d08fef22afb67c000000': 90.0}
+  };
+
+  final finals = ScoreTools.computeFinalScores(assignments, scores);
+  print(finals.pretty());
 }

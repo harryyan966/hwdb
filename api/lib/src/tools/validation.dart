@@ -106,7 +106,6 @@ abstract class Ensure {
         '_id': courseId,
         'assignments.name': name,
       });
-      print(countDuplicateNameAssignmentsRes);
 
       // If a duplicate is found
       if (countDuplicateNameAssignmentsRes != 0) {

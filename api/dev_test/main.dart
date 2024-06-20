@@ -305,7 +305,6 @@ Future<void> main() async {
       r'$project': {'_id': 0, 'studentId': r'$_id', 'scores': 1}
     }
   ]).toList();
-  print(updateScoreResult);
 
   await database.close();
 }

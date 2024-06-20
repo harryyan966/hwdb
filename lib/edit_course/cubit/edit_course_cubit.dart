@@ -31,8 +31,6 @@ class EditCourseCubit extends Cubit<EditCourseState> {
         event: Events.gotStudents,
         students: students,
       ));
-
-      print(state.status.isLoading);
     }
 
     // THROW ANY UNEXPECTED ERROR
