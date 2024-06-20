@@ -38,7 +38,8 @@ class HwdbHttpClient {
     String apiUrl = '62.234.5.130:8080',
     bool useHttps = false,
     bool debug = false,
-  })  : _debug = debug, _apiUrl = apiUrl,
+  })  : _debug = debug,
+        _apiUrl = apiUrl,
         _localCache = localCache,
         _useHttps = useHttps;
 
@@ -226,7 +227,11 @@ class HwdbHttpClient {
   void _logResponseIfDebug(String query, Json response) {
     if (_debug) {
       log('RESPONSE FOR $query');
-      log(response.pretty());
+      try {
+        log(response.pretty());
+      } on FormatException {
+        log(response.toString());
+      }
       log('----------------------------');
     }
   }

@@ -5,6 +5,8 @@ import 'package:hw_dashboard/app/app.dart';
 import 'package:path_provider/path_provider.dart';
 
 Future<void> main() async {
+  print('RUNNING HWDB IN DEBUG MODE.');
+
   WidgetsFlutterBinding.ensureInitialized();
 
   // SET HYDRATED BLOC STORAGE
