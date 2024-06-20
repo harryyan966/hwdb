@@ -1,20 +1,10 @@
 # hw_dashboard
 
-A school service platform built by and used by students.
-
-if you want to contribute, jump right [here](#coding-philosophy).
+A school service platform built by HW students.
 
 ## Why?
 
-HWDB provides a easy-to-use platform for students to develop school online services for four reasons.
-
-1. It's good for our community
-
-2. It boosts contributors' college application and gives them more stories to tell.
-
-3. It trains programming skills.
-
-4. In-school contribution is guided by our club.
+HWDB provides a easy-to-use platform for students to develop school online services. It could improve students' daily life, college applications, and programming skills. 
 
 ## Coding philosophy
 

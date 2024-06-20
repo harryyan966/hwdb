@@ -12,7 +12,7 @@ void showSimpleDialog(
     barrierDismissible: dismissible,
     builder: (context) => Dialog(
       child: Padding(
-        padding: const EdgeInsets.all(Spacing.xxl),
+        padding: const EdgeInsets.all(Spacing.xl),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -21,7 +21,7 @@ void showSimpleDialog(
               title,
               style: Theme.of(context).textTheme.titleLarge,
             ),
-            if (content != null) SizedBox(height: Spacing.m),
+            if (content != null) SizedBox(height: Spacing.xl),
             if (content != null) content,
           ],
         ),

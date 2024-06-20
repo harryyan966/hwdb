@@ -151,3 +151,5 @@
 ## git push doesn't work suddenly
     - don't know why but
     - `eval 'ssh-agent -s' && ssh-add ~/.ssh/id_ed25519`'
+
+## Setting reverse: true doesn't work in scoreboard cubit copywith

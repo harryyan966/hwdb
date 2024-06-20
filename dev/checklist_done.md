@@ -187,3 +187,6 @@
 
 ## (!) Auto-login
 - supposedly done
+
+## Test real-world loading behavior with latency
+- supposedly done

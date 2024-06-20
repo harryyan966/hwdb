@@ -51,7 +51,7 @@ class ScoreBoardCubit extends Cubit<ScoreBoardState> {
   /// Updates a score by student and assignment indices.
   Future<void> updateScore(int studentInd, int assignmentInd, double? score) async {
     // If the score is not changed
-    if (state.score(studentInd, assignmentInd) == score) {
+    if (state.displayedScore(studentInd, assignmentInd) == score) {
       return;
     }
 
@@ -138,6 +138,31 @@ class ScoreBoardCubit extends Cubit<ScoreBoardState> {
   /// Updates the student list locally.
   void updateStudentList(List<User> students) {
     emit(state.copyWith(students: students));
+  }
+
+  /// Sorts the students by name.
+  void setNameSortScheme() {
+    if (!state.sortByName) {
+      emit(state.copyWith(sortByName: true, reverseSort: false));
+    } else {
+      emit(state.copyWith(reverseSort: !state.reverseSort));
+    }
+  }
+
+  /// Sorts the students by a particular assignment.
+  void setAssignmentSortScheme(String? assignmentId) {
+    if (state.sortByName) {
+      emit(state.copyWith(
+        sortByName: false,
+        sortedAssignment: () => assignmentId,
+        reverseSort: false,
+      ));
+    } else {
+      emit(state.copyWith(
+        sortedAssignment: () => assignmentId,
+        reverseSort: !state.reverseSort,
+      ));
+    }
   }
 
   // TODO: should we use savescores or update scores: CHECK ON LATENCY, deprecating saveScores temporarily
@@ -363,14 +388,20 @@ class ScoreBoardCubit extends Cubit<ScoreBoardState> {
     sheet.setRowHeight(0, 30);
     sheet.setColumnWidth(0, 20);
 
-    // INSERT STUDENTS IN ROW TITLES
-    for (int i = 0; i < state.sortedStudents.length; i++) {
+    // INSERT STUDENTS AND "AVERAGE SCORES" IN ROW TITLES
+    for (int i = 0; i < state.sortedStudents.length + 1; i++) {
       final cell = sheet.cell(ex.CellIndex.indexByColumnRow(columnIndex: 0, rowIndex: i + 1));
-      cell.value = ex.TextCellValue(state.sortedStudents[i].name);
+      cell.value = i == state.students.length
+          ? ex.TextCellValue(l10n.scoreBoardLabel_AverageScore)
+          : ex.TextCellValue(state.sortedStudents[i].name);
       cell.cellStyle = baseStyle.copyWith(
         boldVal: true,
-        backgroundColorHexVal: ex.ExcelColor.fromInt(colorScheme.secondaryContainer.value),
-        fontColorHexVal: ex.ExcelColor.fromInt(colorScheme.onSecondaryContainer.value),
+        backgroundColorHexVal: i == state.students.length
+            ? ex.ExcelColor.fromInt(colorScheme.primaryContainer.value)
+            : ex.ExcelColor.fromInt(colorScheme.secondaryContainer.value),
+        fontColorHexVal: i == state.students.length
+            ? ex.ExcelColor.fromInt(colorScheme.onPrimaryContainer.value)
+            : ex.ExcelColor.fromInt(colorScheme.onSecondaryContainer.value),
       );
 
       sheet.setRowHeight(i + 1, 30);
@@ -396,11 +427,11 @@ class ScoreBoardCubit extends Cubit<ScoreBoardState> {
     }
 
     // INSERT SCORES IN CONTENT
-    for (int i = 0; i < state.sortedStudents.length; i++) {
+    for (int i = 0; i < state.sortedStudents.length + 1; i++) {
       for (int j = 0; j < state.sortedAssignments.length + 1; j++) {
         // ASSIGNMENT AND FINAL SCORES
         final cell = sheet.cell(ex.CellIndex.indexByColumnRow(columnIndex: j + 1, rowIndex: i + 1));
-        final score = state.score(i, j);
+        final score = state.displayedScore(i, j);
         cell.value = score == null ? ex.TextCellValue(l10n.scoreBoardLabel_EmptyScore) : ex.DoubleCellValue(score);
         cell.cellStyle = baseStyle.copyWith(
           backgroundColorHexVal: score == null ? ex.ExcelColor.fromInt(colorScheme.errorContainer.value) : null,

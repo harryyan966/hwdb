@@ -7,6 +7,9 @@ class ScoreBoardState extends Equatable {
   final Errors error;
   final Map<String, Map<String, double?>> scores;
   final Map<String, double?> finalScores;
+  final bool sortByName;
+  final String? sortedAssignment;
+  final bool reverseSort;
   final List<User> students;
   final List<Assignment> assignments;
 
@@ -16,60 +19,126 @@ class ScoreBoardState extends Equatable {
     this.error = Errors.none,
     this.scores = const {},
     this.finalScores = const {},
+    this.sortByName = true,
+    this.sortedAssignment,
+    this.reverseSort = false,
     this.students = const [],
     this.assignments = const [],
   });
 
-  bool isValidFocus(int studentInd, int assignmentInd) {
-    if (studentInd < 0 || studentInd >= students.length) {
-      return false;
+  /// Students sorted according to the rules provided (name, assignment, reverse).
+  List<User> get sortedStudents {
+    if (students.isEmpty) {
+      return []; // When the list is initialized, it is const and cannot be sorted.
     }
-    if (assignmentInd < 0 || assignmentInd >= assignments.length) {
-      return false;
+
+    // Sort students by name.
+    // TODO: will this sorting preference remain after another sort (perhaps by score)?
+    students.sort((a, b) => a.name.compareTo(b.name));
+
+    // If students are sorted by name
+    if (sortByName) {
+      // Sort by name only.
+      return reverseSort ? students.reversed.toList() : students;
     }
-    return true;
+    // If students are sorted by score
+    else {
+      // If the user provided an assignment to sort on
+      if (sortedAssignment != null) {
+        // If the assignment exists
+        if (assignments.any((e) => e.id == sortedAssignment)) {
+          // Sort by scores of this assignment.
+          return students
+            ..sort((a, b) {
+              final scoreA = scores[a.id]?[sortedAssignment] ?? -1;
+              final scoreB = scores[b.id]?[sortedAssignment] ?? -1;
+              return reverseSort ? scoreB.compareTo(scoreA) : scoreA.compareTo(scoreB);
+            });
+        }
+        // If the assignment does not exist
+        else {
+          // Sort by name only.
+          return reverseSort ? students.reversed.toList() : students;
+        }
+      }
+      // If the user did not provide an assignment to sort on
+      else {
+        // Sort by final score.
+        return students
+          ..sort((a, b) {
+            final scoreA = finalScores[a.id] ?? -1;
+            final scoreB = finalScores[b.id] ?? -1;
+            return reverseSort ? scoreB.compareTo(scoreA) : scoreA.compareTo(scoreB);
+          });
+      }
+    }
   }
 
+  /// Assignments sorted by due date first and name second.
+  List<Assignment> get sortedAssignments => assignments.isEmpty ? [] : assignments
+    ..sort((a, b) {
+      // Sort by date first and name second.
+      final dateComparison = b.dueDate.compareTo(a.dueDate);
+      if (dateComparison != 0) return dateComparison;
+      return a.name.compareTo(b.name);
+    });
+
+  /// Gets student id from student index.
   String? studentId(int studentInd) {
-    if (studentInd < 0 || studentInd >= students.length) {
+    if (studentInd < 0 || studentInd > students.length) {
+      throw Exception('Student index out of bounds.');
+    }
+    // If concerning average score
+    if (studentInd == students.length) {
       return null;
     }
     return sortedStudents[studentInd].id;
   }
 
+  /// Gets assignment id from assignment index.
   String? assignmentId(int assignmentInd) {
-    if (assignmentInd < 0 || assignmentInd >= assignments.length) {
+    if (assignmentInd < 0 || assignmentInd > assignments.length) {
+      throw Exception('Assignment index out of bounds.');
+    }
+    // If concerning final score
+    if (assignmentInd == assignments.length) {
       return null;
     }
     return sortedAssignments[assignmentInd].id;
   }
 
-  double? score(int studentInd, int assignmentInd) {
+  /// Gets score from student and assignment index.
+  double? displayedScore(int studentInd, int assignmentInd) {
     final sid = studentId(studentInd);
-    if (sid == null) {
-      return null;
-    }
+    final aid = assignmentId(assignmentInd);
 
-    if (assignmentInd == assignments.length) {
+    // If getting average final score
+    if (sid == null && aid == null) {
+      final average = ScoreTools.avg(finalScores.values);
+      return average == null ? null : ScoreTools.toOneDecimalPlace(average);
+    }
+    // If getting average score of assignment
+    else if (sid == null) {
+      final average = ScoreTools.avg([for (final student in students) scores[student.id]?[aid]]);
+      return average == null ? null : ScoreTools.toOneDecimalPlace(average);
+    }
+    // If getting final score of stuent
+    else if (aid == null) {
       return finalScores[sid];
     }
-
-    final aid = assignmentId(assignmentInd);
-    if (aid == null) {
-      return null;
+    // If getting score of student and assignment
+    else {
+      return scores[sid]?[aid];
     }
+  }
 
-    return scores[sid]?[aid];
+  bool canFocus(int studentInd, int assignmentInd) {
+    return studentInd >= 0 && studentInd < students.length && assignmentInd >= 0 && assignmentInd <= assignments.length;
   }
 
   String scoreString(int studentInd, int assignmentInd) {
-    return score(studentInd, assignmentInd)?.toString() ?? '';
+    return displayedScore(studentInd, assignmentInd)?.toString() ?? '';
   }
-
-  List<User> get sortedStudents => students.isEmpty ? [] : students
-    ..sort((a, b) => a.name.compareTo(b.name));
-  List<Assignment> get sortedAssignments => assignments.isEmpty ? [] : assignments
-    ..sort((a, b) => b.dueDate.compareTo(a.dueDate));
 
   ScoreBoardState copyWith({
     PageStatus? status,
@@ -77,6 +146,10 @@ class ScoreBoardState extends Equatable {
     Errors? error,
     Map<String, Map<String, double?>>? scores,
     Map<String, double?>? finalScores,
+    Map<String, double?>? averageScores,
+    bool? sortByName,
+    String? Function()? sortedAssignment,
+    bool? reverseSort,
     List<User>? students,
     List<Assignment>? assignments,
   }) {
@@ -86,11 +159,15 @@ class ScoreBoardState extends Equatable {
       error: error ?? Errors.none,
       scores: scores ?? this.scores,
       finalScores: finalScores ?? this.finalScores,
+      sortByName: sortByName ?? this.sortByName,
+      sortedAssignment: sortedAssignment == null ? this.sortedAssignment : sortedAssignment(),
+      reverseSort: reverseSort ?? this.reverseSort,
       students: students ?? this.students,
       assignments: assignments ?? this.assignments,
     );
   }
 
   @override
-  List<Object> get props => [status, event, error, scores, finalScores, students, assignments];
+  List<Object?> get props =>
+      [status, event, error, scores, finalScores, sortByName, sortedAssignment, reverseSort, students, assignments];
 }
