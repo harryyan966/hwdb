@@ -26,8 +26,9 @@ class AccountView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           AccountProfile(),
-          ThemeSelector(),
           LanguageSelector(),
+          ThemeSelector(),
+          ThemeColorSelector(),
           AccountActions(),
         ],
       ),

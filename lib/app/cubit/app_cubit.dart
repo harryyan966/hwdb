@@ -20,13 +20,22 @@ class AppCubit extends HydratedCubit<AppState> {
     emit(state.copyWith(language: language));
   }
 
+  void setThemeColor(Color themeColor) {
+    emit(state.copyWith(themeColor: themeColor));
+  }
+
   @override
   AppState? fromJson(Json json) {
     return AppState(
-      user: User.fromJson(json['user']),
-      language: Language.values.byName(json['language']),
-      themeMode: ThemeMode.values.byName(json['themeMode']),
-    );
+        user: User.fromJson(json['user']),
+        language: Language.values.byName(json['language']),
+        themeMode: ThemeMode.values.byName(json['themeMode']),
+        themeColor: Color.fromARGB(
+          json['themeColor_a'],
+          json['themeColor_r'],
+          json['themeColor_g'],
+          json['themeColor_b'],
+        ));
   }
 
   @override
@@ -35,6 +44,10 @@ class AppCubit extends HydratedCubit<AppState> {
       'user': state.user.toJson(),
       'language': state.language.name,
       'themeMode': state.themeMode.name,
+      'themeColor_a': state.themeColor.alpha,
+      'themeColor_r': state.themeColor.red,
+      'themeColor_g': state.themeColor.green,
+      'themeColor_b': state.themeColor.blue,
     };
   }
 }

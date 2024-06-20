@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
-final appLightTheme = (const _AppLightTheme()).themeData;
-final appDarkTheme = (const _AppDarkTheme()).themeData;
+ThemeData appLightTheme(Color color) => (_AppLightTheme(color)).themeData;
+ThemeData appDarkTheme(Color color) => (_AppDarkTheme(color)).themeData;
 
 class _AppLightTheme {
-  const _AppLightTheme();
+  _AppLightTheme(Color color) : _themeColor = color;
+
+  final Color _themeColor;
 
   ThemeData get themeData => ThemeData(
         colorScheme: _colorScheme,
@@ -13,7 +15,7 @@ class _AppLightTheme {
         fontFamilyFallback: ['Arial'],
       );
 
-  Color get _seedColor => Colors.deepPurple;
+  Color get _seedColor => _themeColor;
 
   ColorScheme get _colorScheme => ColorScheme.fromSeed(
         seedColor: _seedColor,
@@ -22,7 +24,7 @@ class _AppLightTheme {
 }
 
 class _AppDarkTheme extends _AppLightTheme {
-  const _AppDarkTheme();
+  _AppDarkTheme(super.color);
 
   @override
   ColorScheme get _colorScheme => ColorScheme.fromSeed(

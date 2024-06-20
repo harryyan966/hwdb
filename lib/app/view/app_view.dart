@@ -32,6 +32,7 @@ class AppView extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeMode = context.select((AppCubit cubit) => cubit.state.themeMode);
     final language = context.select((AppCubit cubit) => cubit.state.language);
+    final themeColor = context.select((AppCubit cubit) => cubit.state.themeColor);
 
     PlatformDispatcher.instance.onError = (error, st) {
       // SHOW DIALOG WHEN NETWORK FAILED
@@ -93,8 +94,8 @@ class AppView extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       navigatorKey: rootNavigatorKey,
       themeMode: themeMode,
-      theme: appLightTheme,
-      darkTheme: appDarkTheme,
+      theme: appLightTheme(themeColor),
+      darkTheme: appDarkTheme(themeColor),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       locale: Locale.fromSubtags(languageCode: language.name),

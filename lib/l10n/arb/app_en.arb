@@ -39,6 +39,7 @@
     "formLabel_AssignmentName": "Assignment name",
     "formLabel_SelectLangauge": "Select language",
     "formLabel_SelectTheme": "Select theme",
+    "formLabel_SelectThemeColor": "Select theme color",
     "formLabel_SelectStudents": "Select students",
     "formLabel_SelectAssignmentType": "Select assignment type",
     "formLabel_SelectUserRole": "Select user role",
@@ -82,6 +83,7 @@
     "buttonLabel_Search": "Search",
     "buttonLabel_Details": "Details",
     "buttonLabel_Remove": "Remove",
+    "buttonLabel_Select": "Select",
     "buttonLabel_CalculateMidtermScore": "Calculate midterm score",
     "buttonLabel_CalculateFinalScore": "Calculate final score",
     "buttonLabel_PublishAsMidterm": "Publish as offical midterm score",
@@ -125,8 +127,9 @@
     "scoreboardLabel_UnofficialFinalScore": "Unofficial final score: {score}",
     "@scoreboardLabel_UnofficialFinalScore": {"placeholders": {"score": {"type": "String"}}},
     "scoreboardLabel_NoStudentsYet": "No students yet.",
-    
     "scoreBoardLabel_EmptyScore": "-",
+
+    "coursesLabel_NoCoursesYet": "No Courses Yet.",
 
     "assignmentType_Homework": "Homework",
     "assignmentType_Quiz": "Quiz",

@@ -38,12 +38,13 @@ class AccountProfile extends StatelessWidget {
           Text(
             EnumString.userRole(context, user.role),
             style: textTheme.labelLarge?.copyWith(
-              color: switch (user.role) {
-                UserRole.admin => Colors.redAccent,
-                UserRole.teacher => Colors.purpleAccent,
-                UserRole.student => Colors.blueAccent,
-                UserRole.none => throw Exception('VISITORS SHOULD NOT BE HERE'),
-              },
+              color: Theme.of(context).colorScheme.primary,
+              // color: switch (user.role) {
+              //   UserRole.admin => Colors.redAccent,
+              //   UserRole.teacher => Colors.purpleAccent,
+              //   UserRole.student => Colors.blueAccent,
+              //   UserRole.none => throw Exception('VISITORS SHOULD NOT BE HERE'),
+              // },
               fontWeight: FontWeight.bold,
             ),
           ),

@@ -61,6 +61,7 @@ class SelectStudentsView extends StatelessWidget {
               onPressed: () => context.read<SelectCourseStudentsCubit>().updateCourseStudentList(),
               child: Text(l10n.buttonLabel_Ok),
             ),
+            const SizedBox(width: Spacing.m),
           ],
         ),
         body: const Column(

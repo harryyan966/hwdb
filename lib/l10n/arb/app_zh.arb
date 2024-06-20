@@ -40,6 +40,7 @@
     "formLabel_AssignmentName": "任务主题",
     "formLabel_SelectLangauge": "选择语言",
     "formLabel_SelectTheme": "选择主题样式",
+    "formLabel_SelectThemeColor": "选择主题颜色",
     "formLabel_SelectStudents": "选择学生",
     "formLabel_SelectAssignmentType": "选择任务类别",
     "formLabel_SelectUserRole": "选择用户权限",
@@ -83,6 +84,7 @@
     "buttonLabel_Search": "搜寻",
     "buttonLabel_Details": "详情",
     "buttonLabel_Remove": "删除",
+    "buttonLabel_Select": "选择",
     "buttonLabel_CalculateMidtermScore": "计算期中成绩",
     "buttonLabel_CalculateFinalScore": "计算期末成绩",
     "buttonLabel_PublishAsMidterm": "提交最终期中成绩",
@@ -127,8 +129,9 @@
     "scoreboardLabel_UnofficialFinalScore": "非官方期末成绩：{score}",
     "@scoreboardLabel_UnofficialFinalScore": {"placeholders": {"score": {"type": "String"}}},
     "scoreboardLabel_NoStudentsYet": "暂无学生",
-    
     "scoreBoardLabel_EmptyScore": "-",
+
+    "coursesLabel_NoCoursesYet": "暂无课程",
 
     "assignmentType_Homework": "家庭作业",
     "assignmentType_Quiz": "小测",

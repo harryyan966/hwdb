@@ -14,34 +14,47 @@ class CourseList extends StatelessWidget {
   Widget build(BuildContext context) {
     final courses = context.select((CourseSearchCubit cubit) => cubit.state.courses);
     final hasMore = context.select((CourseSearchCubit cubit) => cubit.state.hasMore);
+    final l10n = context.l10n;
 
     return Expanded(
       child: RefreshIndicator(
         onRefresh: () async => context.read<CourseSearchCubit>().reLoad(),
-        child: ListView.builder(
-          itemCount: courses.length + 1,
-          itemBuilder: (context, index) {
-            // IF THE ITEM IS THE LAST ITEM
-            if (index == courses.length) {
-              if (hasMore) {
-                // IF THERE ARE MORE COURSES, BUILD THE LAST ITEM AS A LOADER
-                return Loader(onPresented: () {
-                  context.read<CourseSearchCubit>().getCourses();
-                });
-              }
+        child: courses.isEmpty
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(l10n.coursesLabel_NoCoursesYet, style: Theme.of(context).textTheme.labelLarge),
+                  const SizedBox(height: Spacing.l),
+                  ElevatedButton(
+                    onPressed: () => context.read<CourseSearchCubit>().reLoad(),
+                    child: Text(l10n.buttonLabel_Refresh),
+                  ),
+                ],
+              )
+            : ListView.builder(
+                itemCount: courses.length + 1,
+                itemBuilder: (context, index) {
+                  // IF THE ITEM IS THE LAST ITEM
+                  if (index == courses.length) {
+                    if (hasMore) {
+                      // IF THERE ARE MORE COURSES, BUILD THE LAST ITEM AS A LOADER
+                      return Loader(onPresented: () {
+                        context.read<CourseSearchCubit>().getCourses();
+                      });
+                    }
 
-              // IF THERE ARE NO MORE COURSES, REMOVE THE LAST ITEM
-              else {
-                return const SizedBox();
-              }
-            }
+                    // IF THERE ARE NO MORE COURSES, REMOVE THE LAST ITEM
+                    else {
+                      return const SizedBox();
+                    }
+                  }
 
-            final course = courses[index];
+                  final course = courses[index];
 
-            // BUILD A COURSE INFO REPRESENTATION
-            return CourseInfoTile(course: course);
-          },
-        ),
+                  // BUILD A COURSE INFO REPRESENTATION
+                  return CourseInfoTile(course: course);
+                },
+              ),
       ),
     );
   }
