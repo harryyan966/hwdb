@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hw_dashboard/app/app.dart';
 import 'package:hw_dashboard/l10n/l10n.dart';
-import 'package:tools/tools.dart';
 
 class AccountProfile extends StatelessWidget {
   const AccountProfile({super.key});

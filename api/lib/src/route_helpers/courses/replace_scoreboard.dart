@@ -23,14 +23,14 @@ Future<Response> replaceScoreboard(RequestContext context, Id courseId) async {
   }
 
   // CHECK THESE IDS
-  final matchingCourses = await context.db.collection('courses').count({
+  final matchCount = await context.db.collection('courses').count({
     '_id': courseId,
     'studentIds': {r'$all': studentIds},
     'assignments.id': {r'$all': assignmentIds.toList()},
   });
 
   // SOME STUDENT IDS OR ASSIGNMENT IDS ARE NOT IN THE COURSE
-  if (matchingCourses != 1) {
+  if (matchCount != 1) {
     throw BadRequest(Errors.invalidArguments);
   }
 

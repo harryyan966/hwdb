@@ -38,4 +38,12 @@ class Projections {
     'scores': 1,
     'finalScores': 1,
   };
+
+  static Map<String, Object> classInfo = {
+    '_id': 0,
+    'id': r'$_id',
+    'name': 1,
+    'teacher': 1,
+    'students': 1,
+  };
 }

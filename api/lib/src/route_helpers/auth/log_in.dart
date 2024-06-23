@@ -4,10 +4,11 @@ import 'package:tools/tools.dart';
 
 /// POST /auth/login => `User` + `authToken`
 Future<Response> logIn(RequestContext context) async {
-  // Get the amount of login attempts the user has made.
+  // Count login attempts the user has made.
   final getLoginsRes = await context.db.collection('logins').findOne({
     'ip': context.request.connectionInfo.remoteAddress.address,
   });
+  // ignore: unused_local_variable
   final lastAttemptTime = (getLoginsRes?['lastAttemptTime']) as DateTime?;
   final retryCount = (getLoginsRes?['retryCount'] ?? 0) as int;
 

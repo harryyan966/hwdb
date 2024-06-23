@@ -31,6 +31,10 @@ enum Events {
   publishedFinalScore,
   gotStudentScoreReport,
   savedExcel,
+  createdClass,
+  deletedClass,
+  updatedClass,
+  gotClasses,
   ;
 
   @override
@@ -124,7 +128,9 @@ enum DuplicationFields {
   courseName,
   assignmentName,
   assignmentType,
-  user;
+  user,
+  className,
+  ;
 
   @override
   toString() => name;

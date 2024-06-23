@@ -31,6 +31,9 @@ Future<void> init(InternetAddress ip, int port) async {
   await _db
       .collection('courses')
       .createIndex(name: 'assignments', keys: {'assignments.dueDate': -1, 'assignments.name': 1});
+
+  // Ensure there are no duplicate class names.
+  await _db.collection('classes').createIndex(name: 'unique-class-name', keys: {'name': 1}, unique: true);  
 }
 
 // THIS FUNCTION IS CALLED EVERYTIME THE SERVER IS RELOADED

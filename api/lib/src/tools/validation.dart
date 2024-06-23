@@ -46,13 +46,31 @@ abstract class Validate {
       throw InvalidField({'dueDate': ValidationErrors.outOfRange()});
     }
   }
+
+  static void className(String? name) {
+    if (name != null && name.length < 2) {
+      throw InvalidField({'name': ValidationErrors.tooShort(2)});
+    }
+  }
+
+  static void startValue(int? start) {
+    if (start != null && start < 0) {
+      throw Exception('The starting amount must be non-negative.');
+    }
+  }
+
+  static void countValue(int? count) {
+    if (count != null && count < 0) {
+      throw Exception('The count must be non-negative.');
+    }
+  }
 }
 
 abstract class Ensure {
   Ensure._();
 
   // TODO: do we ensure this or not? do we do it in the database instead?
-  /// Ensures that the provided user name is not in the database
+  /// Ensures that the provided user name is not in the database of users.
   static Future<void> userNameNotInDb(
     RequestContext context,
     String? name,
@@ -70,7 +88,7 @@ abstract class Ensure {
     }
   }
 
-  /// Ensures that the provided name-grade-year combination is not in the database.
+  /// Ensures that the provided name-grade-year combination is not in the courses db.
   static Future<void> courseInfoNotInDb(
     RequestContext context,
     String name,
@@ -101,7 +119,7 @@ abstract class Ensure {
     }
 
     if (name != null) {
-      // Get the amount of assignments with duplicate names.
+      // Count assignments with duplicate names.
       final countDuplicateNameAssignmentsRes = await context.db.collection('courses').count({
         '_id': courseId,
         'assignments.name': name,
@@ -131,7 +149,7 @@ abstract class Ensure {
 
   /// Ensures that the current user is the teacher of the provided course.
   static Future<void> isCourseTeacher(RequestContext context, Id courseId) async {
-    // Get the amount of courses with the current courseId and teacherId.
+    // Count courses with the current courseId and teacherId.
     final validCourseCount = await context.db.collection('courses').count({
       '_id': courseId,
       'teacherId': (await context.user).id,
@@ -200,6 +218,36 @@ abstract class Ensure {
     });
     if (courseMatchRes != 1) {
       throw BadRequest(Errors.invalidArguments);
+    }
+  }
+
+  /// Ensures that the current user is the teacher of the provided class.
+  static Future<void> isClassTeacher(RequestContext context, Id classId) async {
+    // Get the current user.
+    final currentUser = await context.user;
+
+    // Count classes that have the provided id and teacher id.
+    final matchedClass = await context.db.collection('classes').count({
+      '_id': classId,
+      'teacherId': currentUser.id,
+    });
+
+    // Ensure there is one class that matches all conditions.
+    if (matchedClass != 1) {
+      throw Forbidden(Errors.permissionDenied);
+    }
+  }
+
+  /// Ensures that the provided name is not in the classes db.
+  static Future<void> classInfoNotInDb(RequestContext context, String name) async {
+    // Count classes that have the same name as the provided name.
+    final matchCount = await context.db.collection('classes').count({'name': name});
+
+    // Send error if there is a match
+    if (matchCount > 0) {
+      throw InvalidField({
+        'name': ValidationErrors.duplicated(DuplicationFields.className),
+      });
     }
   }
 
