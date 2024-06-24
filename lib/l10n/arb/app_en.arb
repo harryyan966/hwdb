@@ -6,22 +6,27 @@
     
     "navBarLabel_Courses": "Courses",
     "navBarLabel_Account": "Account",
+    "navBarLabel_Classes": "Classes",
     "navBarLabel_Admin": "Admin",
     "navBarLabel_CollegeCasino": "College playground",
 
     "pageTitle_Courses": "Courses",
     "pageTitle_Account": "Account",
+    "pageTitle_Classes": "Classes",
     "pageTitle_Admin": "Admin",
     "pageTitle_CreateUser": "Create User",
     "pageTitle_CreateAssignment": "Create Assignment",
     "pageTitle_CreateCourse": "Create Course",
+    "pageTitle_CreateClass": "Create Class",
     "pageTitle_SearchUsers": "Search Users",
     "pageTitle_LogIn": "Start HWDB",
     "pageTitle_SelectStudents": "Select Students",
     "pageTitle_SelectTeacher": "Select Teacher",
     "pageTitle_ManageUsers": "Manage Users",
     "pageTitle_ManageCourses": "Manage Courses",
+    "pageTitle_ManageClasses": "Manage Classes",
     "pageTitle_EditCourse": "Edit Course",
+    "pageTitle_EditClass": "Edit Class",
     "pageTitle_StudentScoreReport": "Student Score Report",
     "pageTitle_CollegeCasino": "College Playground",
 
@@ -34,6 +39,7 @@
     "formLabel_CourseName": "Course name",
     "formLabel_CourseYear": "Course year",
     "formLabel_CourseInfo": "Course info",
+    "formLabel_ClassName": "Class name",
     "formLabel_User": "User",
     "formLabel_Teacher": "Teacher",
     "formLabel_AssignmentName": "Assignment name",
@@ -56,6 +62,7 @@
 
     "searchBarLabel_SearchCourses": "Search courses",
     "searchBarLabel_SearchUsers": "Search users",
+    "searchBarLabel_SearchClasses": "Search classes",
 
     "validationError_Required": "This field is required.",
     "validationError_TooShort": "Please put more than {number} characters.",
@@ -130,6 +137,7 @@
     "scoreBoardLabel_EmptyScore": "-",
 
     "coursesLabel_NoCoursesYet": "No Courses Yet.",
+    "classesLabel_NoClassesYet": "No Classes Yet.",
 
     "assignmentType_Homework": "Homework",
     "assignmentType_Quiz": "Quiz",

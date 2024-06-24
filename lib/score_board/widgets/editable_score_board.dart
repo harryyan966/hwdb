@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hw_dashboard/l10n/l10n.dart';
 import 'package:hw_dashboard/score_board/score_board.dart';
 import 'package:hw_dashboard/score_board/widgets/sort_cell.dart';
-import 'package:hw_dashboard/student_score/student_score.dart';
+import 'package:hw_dashboard/student_course_score/student_course_score.dart';
 import 'package:table_sticky_headers/table_sticky_headers.dart';
 
 class EditableScoreBoard extends StatefulWidget {
@@ -109,7 +109,7 @@ class _EditableScoreBoardState extends State<EditableScoreBoard> {
           final student = students[index];
 
           return GestureDetector(
-            onTap: () => context.nav.push(StudentScorePage.route(course, student)),
+            onTap: () => context.nav.push(StudentCourseScorePage.route(course, student)),
             child: TitleCell(student.name, fillColor: colorScheme.secondaryContainer),
           );
         },

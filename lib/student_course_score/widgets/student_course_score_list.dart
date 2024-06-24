@@ -2,20 +2,20 @@ import 'package:client_tools/client_tools.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hw_dashboard/l10n/l10n.dart';
-import 'package:hw_dashboard/student_score/student_score.dart';
+import 'package:hw_dashboard/student_course_score/student_course_score.dart';
 import 'package:intl/intl.dart';
 import 'package:tools/tools.dart';
 
-class StudentScoreList extends StatelessWidget {
-  const StudentScoreList({super.key});
+class StudentCourseScoreList extends StatelessWidget {
+  const StudentCourseScoreList({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final loading = context.select((StudentScoreCubit cubit) => cubit.state.status.isLoading);
-    final assignments = context.select((StudentScoreCubit cubit) => cubit.state.assignments);
-    final scores = context.select((StudentScoreCubit cubit) => cubit.state.scores);
-    final midtermScore = context.select((StudentScoreCubit cubit) => cubit.state.midtermScore);
-    final finalScore = context.select((StudentScoreCubit cubit) => cubit.state.finalScore);
+    final loading = context.select((StudentCourseScoreCubit cubit) => cubit.state.status.isLoading);
+    final assignments = context.select((StudentCourseScoreCubit cubit) => cubit.state.assignments);
+    final scores = context.select((StudentCourseScoreCubit cubit) => cubit.state.scores);
+    final midtermScore = context.select((StudentCourseScoreCubit cubit) => cubit.state.midtermScore);
+    final finalScore = context.select((StudentCourseScoreCubit cubit) => cubit.state.finalScore);
     final colorScheme = Theme.of(context).colorScheme;
     final l10n = context.l10n;
 

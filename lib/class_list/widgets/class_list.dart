@@ -2,57 +2,58 @@ import 'package:client_tools/client_tools.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hw_dashboard/app/app.dart';
-import 'package:hw_dashboard/course_search/course_search.dart';
+import 'package:hw_dashboard/class_list/class_list.dart';
 import 'package:hw_dashboard/l10n/l10n.dart';
-import 'package:hw_dashboard/score_board/score_board.dart';
-import 'package:hw_dashboard/student_course_score/student_course_score.dart';
+import 'package:hw_dashboard/student_score/student_score.dart';
 
-class CourseList extends StatelessWidget {
-  const CourseList({super.key});
+import '../../class_score_board/view/class_score_board_page.dart';
+
+class ClassList extends StatelessWidget {
+  const ClassList({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final courses = context.select((CourseSearchCubit cubit) => cubit.state.courses);
-    final hasMore = context.select((CourseSearchCubit cubit) => cubit.state.hasMore);
+    final classes = context.select((ClassListCubit cubit) => cubit.state.classes);
+    final hasMore = context.select((ClassListCubit cubit) => cubit.state.hasMore);
     final l10n = context.l10n;
 
     return Expanded(
       child: RefreshIndicator(
-        onRefresh: () async => context.read<CourseSearchCubit>().reLoad(),
-        child: courses.isEmpty
+        onRefresh: () async => context.read<ClassListCubit>().refreshClasses(),
+        child: classes.isEmpty
             ? Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(l10n.coursesLabel_NoCoursesYet, style: Theme.of(context).textTheme.labelLarge),
+                  Text(l10n.classesLabel_NoClassesYet, style: Theme.of(context).textTheme.labelLarge),
                   const SizedBox(height: Spacing.l),
                   ElevatedButton(
-                    onPressed: () => context.read<CourseSearchCubit>().reLoad(),
+                    onPressed: () => context.read<ClassListCubit>().refreshClasses(),
                     child: Text(l10n.buttonLabel_Refresh),
                   ),
                 ],
               )
             : ListView.builder(
-                itemCount: courses.length + 1,
+                itemCount: classes.length + 1,
                 itemBuilder: (context, index) {
                   // IF THE ITEM IS THE LAST ITEM
-                  if (index == courses.length) {
+                  if (index == classes.length) {
                     if (hasMore) {
-                      // IF THERE ARE MORE COURSES, BUILD THE LAST ITEM AS A LOADER
+                      // IF THERE ARE MORE CLASSES, BUILD THE LAST ITEM AS A LOADER
                       return Loader(onPresented: () {
-                        context.read<CourseSearchCubit>().getCourses();
+                        context.read<ClassListCubit>().loadMoreClasses();
                       });
                     }
 
-                    // IF THERE ARE NO MORE COURSES, REMOVE THE LAST ITEM
+                    // IF THERE ARE NO MORE CLASSES, REMOVE THE LAST ITEM
                     else {
                       return const SizedBox();
                     }
                   }
 
-                  final course = courses[index];
+                  final classInfo = classes[index];
 
-                  // BUILD A COURSE INFO REPRESENTATION
-                  return CourseInfoTile(course: course);
+                  // BUILD A CLASSES INFO REPRESENTATION
+                  return ClassInfoTile(classInfo: classInfo);
                 },
               ),
       ),
@@ -60,37 +61,31 @@ class CourseList extends StatelessWidget {
   }
 }
 
-class CourseInfoTile extends StatelessWidget {
-  const CourseInfoTile({
+class ClassInfoTile extends StatelessWidget {
+  const ClassInfoTile({
     super.key,
-    required this.course,
+    required this.classInfo,
   });
 
-  final CourseInfo course;
+  final ClassInfo classInfo;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(course.name),
-      subtitle: Text('${course.year} ${EnumString.grade(context, course.grade)}'),
+      title: Text(classInfo.name),
       // TEACHER PROFILE
-      trailing: TeacherProfile(teacher: course.teacher),
+      trailing: TeacherProfile(teacher: classInfo.teacher),
       onTap: () {
         final currentUser = context.read<AppCubit>().state.user;
 
-        // GO TO EDITABLE SCOREBOARD PAGE
-        if (currentUser.role.isTeacher && currentUser.id == course.teacher.id) {
-          context.nav.push(EditableScoreBoardPage.route(course));
-        }
-
         // GO TO READ-ONLY SCOREBOARD PAGE
-        else if (currentUser.role.isAdmin || currentUser.role.isTeacher) {
-          context.nav.push(ReadOnlyScoreBoardPage.route(course));
+        if (currentUser.role.isAdmin || currentUser.role.isTeacher) {
+          context.nav.push(ClassScoreBoardPage.route(classInfo));
         }
 
         // GO TO PERSONAL SCOREBOARD PAGE
         else if (currentUser.role.isStudent) {
-          context.nav.push(StudentCourseScorePage.route(course, currentUser));
+          context.nav.push(StudentScorePage.route(classInfo, currentUser));
         }
       },
     );

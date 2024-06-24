@@ -6,23 +6,28 @@
     
     "navBarLabel_Courses": "课程",
     "navBarLabel_Account": "账户",
+    "navBarLabel_Classes": "班级",
     "navBarLabel_Admin": "管理",
     "navBarLabel_CollegeCasino": "抽大学",
 
 
     "pageTitle_Courses": "课程",
     "pageTitle_Account": "账户",
+    "pageTitle_Classes": "班级",
     "pageTitle_Admin": "管理",
     "pageTitle_CreateUser": "创建用户",
     "pageTitle_CreateAssignment": "新建任务",
     "pageTitle_CreateCourse": "创建课程",
+    "pageTitle_CreateClass": "创建班级",
     "pageTitle_SearchUsers": "用户管理",
     "pageTitle_LogIn": "启动HWDB",
     "pageTitle_SelectStudents": "选择学生",
     "pageTitle_SelectTeacher": "选择教师",
     "pageTitle_ManageUsers": "管理用户",
     "pageTitle_ManageCourses": "管理课程",
+    "pageTitle_ManageClasses": "管理班级",
     "pageTitle_EditCourse": "修改课程信息",
+    "pageTitle_EditClass": "修改班级信息",
     "pageTitle_StudentScoreReport": "学生分数报告",
     "pageTitle_CollegeCasino": "抽大学",
 
@@ -35,6 +40,7 @@
     "formLabel_CourseName": "课程名称",
     "formLabel_CourseYear": "课程学年",
     "formLabel_CourseInfo": "课程基本信息",
+    "formLabel_ClassName": "班级名称",
     "formLabel_User": "User",
     "formLabel_Teacher": "教师",
     "formLabel_AssignmentName": "任务主题",
@@ -57,6 +63,7 @@
 
     "searchBarLabel_SearchCourses": "搜索课程",
     "searchBarLabel_SearchUsers": "搜索用户",
+    "searchBarLabel_SearchClasses": "搜索班级",
 
     "validationError_Required": "请填写此项",
     "validationError_TooShort": "请输入至少{number}个字符",
@@ -132,6 +139,7 @@
     "scoreBoardLabel_EmptyScore": "-",
 
     "coursesLabel_NoCoursesYet": "暂无课程",
+    "classesLabel_NoClassesYet": "暂无班级",
 
     "assignmentType_Homework": "家庭作业",
     "assignmentType_Quiz": "小测",

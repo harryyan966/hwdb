@@ -70,7 +70,7 @@ Future<Response> getClasses(RequestContext context) async {
 
   final matchKeyword = [
     // Get results that contain the keyword in any way.
-    if (keyword != null)
+    if (keyword != null && keyword.trim().isNotEmpty)
       {
         r'$match': {
           'name': {'\$regex': keyword},

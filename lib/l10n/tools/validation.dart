@@ -40,6 +40,7 @@ String toDuplicationFieldString(BuildContext context, String detail) {
       DuplicationFields.assignmentName => l10n.formLabel_AssignmentName,
       DuplicationFields.user => l10n.formLabel_User,
       DuplicationFields.assignmentType => l10n.scoreBoardLabel_AssignmentType,
+      DuplicationFields.className => l10n.formLabel_ClassName,
     };
   } on ArgumentError {
     return 'UNKNOWN FIELD';
