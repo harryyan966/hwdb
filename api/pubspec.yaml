@@ -7,6 +7,7 @@ environment:
   sdk: ^3.4.0-190.1.beta
 
 dependencies:
+  crypt: ^4.3.1
   dart_frog: ^1.1.0
   envied: ^0.5.4+1
   mongo_dart: ^0.10.1

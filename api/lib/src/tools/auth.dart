@@ -1,4 +1,5 @@
 import 'package:api/api.dart';
+import 'package:crypt/crypt.dart';
 import 'package:dart_frog/dart_frog.dart';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:tools/tools.dart';
@@ -6,7 +7,6 @@ import 'package:tools/tools.dart';
 abstract class AuthTools {
   AuthTools._();
 
-  // TODO: make secret env
   static const _secret = Env.tokenSecret;
   static const _tokenExpiresIn = Duration(days: 6);
 
@@ -17,6 +17,16 @@ abstract class AuthTools {
       expiresIn: _tokenExpiresIn,
     );
     return token;
+  }
+
+  /// Returns a password hash from a password.
+  static String hashPassword(String password) {
+    return Crypt.sha256(password).toString();
+  }
+
+  /// Determines whether a hash and a password match.
+  static bool verifyPassword(String hash, String password) {
+    return Crypt(hash).match(password);
   }
 
   /// Decodes JWT token to id

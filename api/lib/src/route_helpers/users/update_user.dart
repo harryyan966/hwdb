@@ -101,11 +101,13 @@ Future<Response> _updatePersonalInfo(RequestContext context) async {
     }
 
     // Ensure the old password is correct.
-    final matchedUsers = await context.db.collection('users').count({
-      '_id': currentUser.id,
-      'password': oldPassword,
-    });
-    if (matchedUsers != 1) {
+    final oldPasswordHash = (await context.db.collection('users').findOne({'_id': currentUser.id}))?['password'];
+
+    if (oldPasswordHash == null) {
+      throw NotFound('user');
+    }
+
+    if (!AuthTools.verifyPassword(oldPasswordHash, oldPassword)) {
       throw InvalidField({'oldPassword': ValidationErrors.invalidPassword()});
     }
   }
@@ -119,7 +121,7 @@ Future<Response> _updatePersonalInfo(RequestContext context) async {
     {
       '\$set': {
         if (currentUser.role.isNotStudent && name != null) 'name': name,
-        if (newPassword != null) 'password': newPassword,
+        if (newPassword != null) 'password': AuthTools.hashPassword(newPassword),
         if (profileImageUrl != null) 'profileImageUrl': profileImageUrl,
       }
     },

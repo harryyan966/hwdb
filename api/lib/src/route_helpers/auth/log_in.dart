@@ -8,6 +8,7 @@ Future<Response> logIn(RequestContext context) async {
   final getLoginsRes = await context.db.collection('logins').findOne({
     'ip': context.request.connectionInfo.remoteAddress.address,
   });
+  // ignore: unused_local_variable
   final lastAttemptTime = (getLoginsRes?['lastAttemptTime']) as DateTime?;
   final retryCount = (getLoginsRes?['retryCount'] ?? 0) as int;
 
@@ -54,13 +55,13 @@ Future<Response> logIn(RequestContext context) async {
   }
 
   // Ensure the password is correct.
-  final actualPassword = user['password'];
-  if (actualPassword != password) {
+  final actualPasswordHash = user['password'];
+  if (!AuthTools.verifyPassword(actualPasswordHash, password)) {
     await _recordFailedLogin(context, retryCount);
     throw Forbidden(Errors.invalidCredentials);
   }
 
-  // Update login allowance.
+  // Update the amount of retries the user can use.
   await _updateLoginAllowance(context);
 
   // Construct auth token.

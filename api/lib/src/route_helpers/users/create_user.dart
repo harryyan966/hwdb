@@ -23,10 +23,13 @@ Future<Response> createUser(RequestContext context) async {
   // Save profile image (if present).
   final profileImageUrl = profileImage == null ? null : await FileTools.saveImage(profileImage);
 
+  // Calculate password hash.
+  final passwordHash = AuthTools.hashPassword(password);
+
   // Write the user in the database.
   final createUserRes = await context.db.collection('users').insertOne({
     'name': name,
-    'password': password,
+    'password': passwordHash,
     'role': role.name,
     'profileImageUrl': profileImageUrl,
   });
