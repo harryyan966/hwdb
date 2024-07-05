@@ -4,6 +4,9 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:hw_dashboard/app/app.dart';
 import 'package:path_provider/path_provider.dart';
 
+const apiHost = '62.234.71.227';
+const apiPort = 8888;
+
 Future<void> main() async {
   print('RUNNING HWDB IN DEBUG MODE.');
 
@@ -20,8 +23,7 @@ Future<void> main() async {
 
   final httpClient = HwdbHttpClient(
     localCache: sharedPreferences,
-    apiUrl: 'localhost:8080',
-    // apiUrl: '62.234.71.227:8888',
+    apiUrl: '$apiHost:$apiPort',
     useHttps: false,
   );
 
