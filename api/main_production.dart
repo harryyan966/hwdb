@@ -35,6 +35,13 @@ Future<void> init(InternetAddress ip, int port) async {
 
 // THIS FUNCTION IS CALLED EVERYTIME THE SERVER IS RELOADED
 Future<HttpServer> run(Handler handler, InternetAddress ip, int port) {
+  final chain = Platform.script.resolve('certificates/server_chain.pem').toFilePath();
+  final key = Platform.script.resolve('certificates/server_key.pem').toFilePath();
+
+  final securityContext = SecurityContext()
+    ..useCertificateChain(chain)
+    ..usePrivateKey(key, password: Env.privateKeyPassword);
+
   return serve(
     handler
 
@@ -51,5 +58,6 @@ Future<HttpServer> run(Handler handler, InternetAddress ip, int port) {
         .use(provider((_) => _db)),
     ip,
     port,
+    securityContext: securityContext,
   );
 }

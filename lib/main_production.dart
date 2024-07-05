@@ -19,7 +19,7 @@ Future<void> main() async {
   final httpClient = HwdbHttpClient(
     localCache: sharedPreferences,
     apiUrl: '62.234.71.227:8080',
-    useHttps: false,
+    useHttps: true,
   );
 
   runApp(App(httpClient: httpClient));
