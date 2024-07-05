@@ -74,13 +74,21 @@ class ScoreBoardState extends Equatable {
     }
   }
 
-  /// Assignments sorted by due date first and name second.
+  /// Assignments sorted by due date then type then name.
   List<Assignment> get sortedAssignments => assignments.isEmpty ? [] : assignments
     ..sort((a, b) {
-      // Sort by date first and name second.
+      // Sort by date.
       final dateComparison = b.dueDate.compareTo(a.dueDate);
-      if (dateComparison != 0) return dateComparison;
-      return a.name.compareTo(b.name);
+      if (dateComparison != 0) {
+        return dateComparison;
+      }
+      // Sort by assignment type.
+      final typeComparison = b.type.index.compareTo(a.type.index);
+      if (typeComparison != 0) {
+        return typeComparison;
+      }
+      // Sort by assignment name.
+      return b.name.compareTo(a.name);
     });
 
   /// Gets student id from student index.

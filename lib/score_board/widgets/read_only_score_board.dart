@@ -37,7 +37,7 @@ class _ReadOnlyScoreBoardState extends State<ReadOnlyScoreBoard> {
         cellAlignments: const CellAlignments.uniform(Alignment.center),
 
         // TOP LEFT CELL (LEGEND CELL)
-        legendCell: SortCell(
+        legendCell: SortControllerCell(
           onPressed: () {
             context.read<ScoreBoardCubit>().setNameSortScheme();
           },
@@ -51,7 +51,7 @@ class _ReadOnlyScoreBoardState extends State<ReadOnlyScoreBoard> {
         columnsLength: assignments.length + 1,
         columnsTitleBuilder: (index) {
           if (index == assignments.length) {
-            return SortCell(
+            return SortControllerCell(
               onPressed: () {
                 context.read<ScoreBoardCubit>().setAssignmentSortScheme(null);
               },
@@ -66,7 +66,7 @@ class _ReadOnlyScoreBoardState extends State<ReadOnlyScoreBoard> {
 
           return GestureDetector(
             onTap: () => showAssignmentDetailDialog(context, assignment),
-            child: SortCell(
+            child: SortControllerCell(
               onPressed: () {
                 context.read<ScoreBoardCubit>().setAssignmentSortScheme(assignment.id);
               },

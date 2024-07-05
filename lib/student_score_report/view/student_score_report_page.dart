@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hw_dashboard/l10n/l10n.dart';
 import 'package:hw_dashboard/student_score_report/cubit/student_score_report_cubit.dart';
+import 'package:tools/tools.dart';
 
 class StudentScoreReportPage extends StatelessWidget {
   const StudentScoreReportPage({required this.student, super.key});
@@ -30,6 +31,7 @@ class StudentScoreReportView extends StatelessWidget {
   Widget build(BuildContext context) {
     final scoreRecords = context.select((StudentScoreReportCubit cubit) => cubit.state.scoreRecords);
     final l10n = context.l10n;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
       appBar: AppBar(
@@ -39,6 +41,9 @@ class StudentScoreReportView extends StatelessWidget {
           ? Table(
               children: [
                 TableRow(
+                  decoration: BoxDecoration(
+                    color: colorScheme.secondaryContainer,
+                  ),
                   children: [
                     TitleCell(l10n.scoreRecordLabel_Course),
                     TitleCell(l10n.scoreRecordLabel_Type),
@@ -50,6 +55,11 @@ class StudentScoreReportView extends StatelessWidget {
                 ),
                 for (final record in scoreRecords)
                   TableRow(
+                    decoration: record.type == ScoreRecordType.finalRecord
+                        ? BoxDecoration(
+                            color: colorScheme.surfaceContainerLow,
+                          )
+                        : null,
                     children: [
                       ContentCell(record.course.name),
                       ContentCell(EnumString.scoreRecordType(context, record.type)),

@@ -8,7 +8,7 @@ class CourseSearchSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => CourseSearchCubit(httpClient: context.read()),
+      create: (context) => CourseSearchCubit(httpClient: context.read())..getCourses(),
       child: const CourseSearchView(),
     );
   }

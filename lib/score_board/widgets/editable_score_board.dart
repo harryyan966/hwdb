@@ -50,7 +50,7 @@ class _EditableScoreBoardState extends State<EditableScoreBoard> {
         cellAlignments: const CellAlignments.uniform(Alignment.center),
 
         // TOP LEFT CELL (LEGEND CELL)
-        legendCell: SortCell(
+        legendCell: SortControllerCell(
           onPressed: () {
             context.read<ScoreBoardCubit>().setNameSortScheme();
           },
@@ -64,7 +64,7 @@ class _EditableScoreBoardState extends State<EditableScoreBoard> {
         columnsLength: assignments.length + 1,
         columnsTitleBuilder: (index) {
           if (index == assignments.length) {
-            return SortCell(
+            return SortControllerCell(
               onPressed: () {
                 context.read<ScoreBoardCubit>().setAssignmentSortScheme(null);
               },
@@ -87,7 +87,7 @@ class _EditableScoreBoardState extends State<EditableScoreBoard> {
                 ),
               ]);
             },
-            child: SortCell(
+            child: SortControllerCell(
               onPressed: () {
                 context.read<ScoreBoardCubit>().setAssignmentSortScheme(assignment.id);
               },
@@ -159,7 +159,6 @@ class _EditableScoreBoardState extends State<EditableScoreBoard> {
   void _submitAndFocus(int studentInd, int assignmentInd) {
     // SCORE STRING OF CURRENT STUDENT AND ASSIGNMENT
     final state = context.read<ScoreBoardCubit>().state;
-    final scoreString = state.scoreString(studentInd, assignmentInd);
 
     // IF THE NEW INDEX CANNOT BE FOCUSED ON
     if (!state.canFocus(studentInd, assignmentInd)) {
@@ -168,6 +167,7 @@ class _EditableScoreBoardState extends State<EditableScoreBoard> {
     }
 
     // IF THE INDICES ARE VALID
+    final scoreString = state.scoreString(studentInd, assignmentInd);
     _submit();
     setState(() {
       editedStudentInd = studentInd;

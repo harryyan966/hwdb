@@ -10,6 +10,16 @@ class StudentScoreReportState extends Equatable {
     this.scoreRecords = const [],
   });
 
+  /// Score records sorted in ascending order by grade then type.
+  List<ScoreRecord> get sortedScoreRecords => scoreRecords
+    ..sort((a, b) {
+      final gradeComparison = a.course.grade.index.compareTo(b.course.grade.index);
+      if (gradeComparison != 0) {
+        return gradeComparison;
+      }
+      return a.type.index.compareTo(b.type.index);
+    });
+
   StudentScoreReportState copyWith({
     PageStatus? status,
     List<ScoreRecord>? scoreRecords,

@@ -154,12 +154,12 @@ class ScoreCell extends StatelessWidget {
     return Cell._(
       width: width,
       height: height,
-      background: score == null ? colorScheme.errorContainer : null,
+      background: score == null ? colorScheme.error : null,
       child: Text(
         // TODO: how to get l10n in here? l10n.label_Empty
         score?.toString() ?? 'NOTHING!',
         style: textTheme.bodyMedium?.copyWith(
-          color: score == null ? colorScheme.onErrorContainer : null,
+          color: score == null ? colorScheme.onError : null,
           fontWeight: score == null ? FontWeight.bold : null,
         ),
       ),

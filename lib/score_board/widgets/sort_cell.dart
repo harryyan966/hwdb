@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class SortCell extends StatelessWidget {
-  const SortCell({
+class SortControllerCell extends StatelessWidget {
+  const SortControllerCell({
     required this.onPressed,
     required this.activated,
     required this.reverse,
