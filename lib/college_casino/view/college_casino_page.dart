@@ -84,48 +84,6 @@ class RandomCard extends StatefulWidget {
 class _RandomCardState extends State<RandomCard> with TickerProviderStateMixin {
   static const _hasBonusCard = false;
   static final _random = Random.secure();
-  static final t1 = <ImageProvider>[
-    Assets.images.colleges.stanford.provider(),
-    Assets.images.colleges.mit.provider(),
-    Assets.images.colleges.harvard.provider(),
-    Assets.images.colleges.yale.provider(),
-    Assets.images.colleges.princeton.provider(),
-    Assets.images.colleges.caltech.provider(),
-  ];
-  static final t2 = <ImageProvider>[
-    Assets.images.colleges.upenn.provider(),
-    Assets.images.colleges.dartmouth.provider(),
-    Assets.images.colleges.cornell.provider(),
-    Assets.images.colleges.northwestern.provider(),
-    Assets.images.colleges.brown.provider(),
-    Assets.images.colleges.columbia.provider(),
-    Assets.images.colleges.jhu.provider(),
-    Assets.images.colleges.duke.provider(),
-    Assets.images.colleges.ucb.provider(),
-    Assets.images.colleges.uchicago.provider(),
-  ];
-  static final t3 = <ImageProvider>[
-    Assets.images.colleges.vanderbilt.provider(),
-    Assets.images.colleges.notredame.provider(),
-    Assets.images.colleges.rice.provider(),
-    Assets.images.colleges.ucla.provider(),
-    Assets.images.colleges.cmu.provider(),
-    Assets.images.colleges.emory.provider(),
-    Assets.images.colleges.gatech.provider(),
-    Assets.images.colleges.tufts.provider(),
-    Assets.images.colleges.unc.provider(),
-  ];
-  static final t4 = <ImageProvider>[
-    Assets.images.colleges.nyu.provider(),
-    Assets.images.colleges.bu.provider(),
-    Assets.images.colleges.illinois.provider(),
-    Assets.images.colleges.madison.provider(),
-    Assets.images.colleges.rochester.provider(),
-    Assets.images.colleges.ucd.provider(),
-    Assets.images.colleges.ucsb.provider(),
-  ];
-  static final pineapple = Assets.images.colleges.pineapple.provider();
-  static final cardBack = Assets.images.collegeCardBack.provider();
 
   late AnimationController _backController;
   late AnimationController _frontController;
@@ -159,7 +117,7 @@ class _RandomCardState extends State<RandomCard> with TickerProviderStateMixin {
               child: _cardSection(
                 controller: _backController,
                 animation: _backAnimation,
-                image: cardBack,
+                image: CardImages.cardBack,
               ),
             ),
             Positioned.fill(
@@ -176,25 +134,27 @@ class _RandomCardState extends State<RandomCard> with TickerProviderStateMixin {
   }
 
   ImageProvider _getRandomCard() {
-    final tierRand = _random.nextDouble();
-    final probs = [0.003, 0.009, 0.027, 0.081];
+    final chance = _random.nextDouble();
+    final chances = [0.003, 0.009, 0.027, 0.081, 0.243];
 
-    // Calculate cumulative prob.
-    for (int i = 0; i < probs.length - 1; i++) {
-      probs[i + 1] = probs[i] + probs[i + 1];
+    // Calculate cumulative chances.
+    for (int i = 1; i < chances.length; i++) {
+      chances[i] = chances[i] + chances[i - 1];
     }
 
-    if (tierRand < probs[0]) {
-      return t1[_random.nextInt(t1.length)];
-    } else if (tierRand < probs[1]) {
-      return t2[_random.nextInt(t2.length)];
-    } else if (tierRand < probs[2]) {
-      return t3[_random.nextInt(t3.length)];
-    } else if (tierRand < probs[3]) {
-      return t4[_random.nextInt(t4.length)];
+    if (chance < chances[0]) {
+      return CardImages.god[_random.nextInt(CardImages.god.length)];
+    } else if (chance < chances[1]) {
+      return CardImages.wtf[_random.nextInt(CardImages.wtf.length)];
+    } else if (chance < chances[2]) {
+      return CardImages.wow[_random.nextInt(CardImages.wow.length)];
+    } else if (chance < chances[3]) {
+      return CardImages.yes[_random.nextInt(CardImages.yes.length)];
+    } else if (chance < chances[4]) {
+      return CardImages.yea[_random.nextInt(CardImages.yea.length)];
     }
 
-    return pineapple;
+    return CardImages.lol;
   }
 
   Widget _cardSection({
@@ -221,12 +181,12 @@ class _RandomCardState extends State<RandomCard> with TickerProviderStateMixin {
   void _initializeAnimation() {
     _backController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 500),
     );
 
     _frontController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 500),
     );
 
     _backAnimation = Tween<double>(
@@ -278,4 +238,66 @@ class _RandomCardState extends State<RandomCard> with TickerProviderStateMixin {
       }
     }
   }
+}
+
+/// NOTE: The groupings of colleges may be inaccurate, and some great colleges are missing on the lists. Please do not take this too seriously as it is only a biased measure of the rarity of colleges offers. Again, all colleges are great colleges, and your fit with the college is always the top priority to consider.
+abstract class CardImages {
+  static final god = <ImageProvider>[
+    Assets.images.colleges.stanford.provider(),
+    Assets.images.colleges.mit.provider(),
+    Assets.images.colleges.harvard.provider(),
+    Assets.images.colleges.yale.provider(),
+    Assets.images.colleges.princeton.provider(),
+    Assets.images.colleges.caltech.provider(),
+  ];
+  static final wtf = <ImageProvider>[
+    Assets.images.colleges.upenn.provider(),
+    Assets.images.colleges.dartmouth.provider(),
+    Assets.images.colleges.cornell.provider(),
+    Assets.images.colleges.northwestern.provider(),
+    Assets.images.colleges.brown.provider(),
+    Assets.images.colleges.columbia.provider(),
+    Assets.images.colleges.jhu.provider(),
+    Assets.images.colleges.duke.provider(),
+    Assets.images.colleges.ucb.provider(),
+    Assets.images.colleges.uchicago.provider(),
+    Assets.images.colleges.cambridge.provider(),
+    Assets.images.colleges.oxford.provider(),
+  ];
+  static final wow = <ImageProvider>[
+    Assets.images.colleges.vanderbilt.provider(),
+    Assets.images.colleges.notredame.provider(),
+    Assets.images.colleges.rice.provider(),
+    Assets.images.colleges.ucla.provider(),
+    Assets.images.colleges.cmu.provider(),
+    Assets.images.colleges.gatech.provider(),
+    Assets.images.colleges.tufts.provider(),
+    Assets.images.colleges.lse.provider(),
+    Assets.images.colleges.washu.provider(),
+    Assets.images.colleges.virginia.provider(),
+    Assets.images.colleges.georgetown.provider(),
+    Assets.images.colleges.umich.provider(),
+  ];
+  static final yes = <ImageProvider>[
+    Assets.images.colleges.usc.provider(),
+    Assets.images.colleges.emory.provider(),
+    Assets.images.colleges.unc.provider(),
+    Assets.images.colleges.imperial.provider(),
+    Assets.images.colleges.nyu.provider(),
+    Assets.images.colleges.ucl.provider(),
+  ];
+  static final yea = <ImageProvider>[
+    Assets.images.colleges.bu.provider(),
+    Assets.images.colleges.uci.provider(),
+    Assets.images.colleges.purdue.provider(),
+    Assets.images.colleges.florida.provider(),
+    Assets.images.colleges.illinois.provider(),
+    Assets.images.colleges.madison.provider(),
+    Assets.images.colleges.rochester.provider(),
+    Assets.images.colleges.ucd.provider(),
+    Assets.images.colleges.ucsb.provider(),
+    Assets.images.colleges.ohio.provider(),
+  ];
+  static final lol = Assets.images.colleges.pineapple.provider();
+  static final cardBack = Assets.images.collegeCardBack.provider();
 }

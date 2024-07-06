@@ -16,6 +16,10 @@ class $AssetsImagesGen {
   AssetGenImage get appLogo =>
       const AssetGenImage('assets/images/app-logo.png');
 
+  /// File path: assets/images/card-back-old.png
+  AssetGenImage get cardBackOld =>
+      const AssetGenImage('assets/images/card-back-old.png');
+
   /// File path: assets/images/college-card-back.png
   AssetGenImage get collegeCardBack =>
       const AssetGenImage('assets/images/college-card-back.png');
@@ -28,7 +32,7 @@ class $AssetsImagesGen {
 
   /// List of all assets
   List<AssetGenImage> get values =>
-      [appLogo, collegeCardBack, defaultProfileImage];
+      [appLogo, cardBackOld, collegeCardBack, defaultProfileImage];
 }
 
 class $AssetsImagesCollegesGen {
@@ -44,6 +48,10 @@ class $AssetsImagesCollegesGen {
   /// File path: assets/images/colleges/caltech.png
   AssetGenImage get caltech =>
       const AssetGenImage('assets/images/colleges/caltech.png');
+
+  /// File path: assets/images/colleges/cambridge.png
+  AssetGenImage get cambridge =>
+      const AssetGenImage('assets/images/colleges/cambridge.png');
 
   /// File path: assets/images/colleges/cmu.png
   AssetGenImage get cmu =>
@@ -69,9 +77,17 @@ class $AssetsImagesCollegesGen {
   AssetGenImage get emory =>
       const AssetGenImage('assets/images/colleges/emory.png');
 
+  /// File path: assets/images/colleges/florida.png
+  AssetGenImage get florida =>
+      const AssetGenImage('assets/images/colleges/florida.png');
+
   /// File path: assets/images/colleges/gatech.png
   AssetGenImage get gatech =>
       const AssetGenImage('assets/images/colleges/gatech.png');
+
+  /// File path: assets/images/colleges/georgetown.png
+  AssetGenImage get georgetown =>
+      const AssetGenImage('assets/images/colleges/georgetown.png');
 
   /// File path: assets/images/colleges/harvard.png
   AssetGenImage get harvard =>
@@ -81,9 +97,17 @@ class $AssetsImagesCollegesGen {
   AssetGenImage get illinois =>
       const AssetGenImage('assets/images/colleges/illinois.png');
 
+  /// File path: assets/images/colleges/imperial.png
+  AssetGenImage get imperial =>
+      const AssetGenImage('assets/images/colleges/imperial.png');
+
   /// File path: assets/images/colleges/jhu.png
   AssetGenImage get jhu =>
       const AssetGenImage('assets/images/colleges/jhu.png');
+
+  /// File path: assets/images/colleges/lse.png
+  AssetGenImage get lse =>
+      const AssetGenImage('assets/images/colleges/lse.png');
 
   /// File path: assets/images/colleges/madison.png
   AssetGenImage get madison =>
@@ -105,9 +129,13 @@ class $AssetsImagesCollegesGen {
   AssetGenImage get nyu =>
       const AssetGenImage('assets/images/colleges/nyu.png');
 
-  /// File path: assets/images/colleges/penn.png
-  AssetGenImage get penn =>
-      const AssetGenImage('assets/images/colleges/penn.png');
+  /// File path: assets/images/colleges/ohio.png
+  AssetGenImage get ohio =>
+      const AssetGenImage('assets/images/colleges/ohio.png');
+
+  /// File path: assets/images/colleges/oxford.png
+  AssetGenImage get oxford =>
+      const AssetGenImage('assets/images/colleges/oxford.png');
 
   /// File path: assets/images/colleges/pineapple.png
   AssetGenImage get pineapple =>
@@ -116,6 +144,10 @@ class $AssetsImagesCollegesGen {
   /// File path: assets/images/colleges/princeton.png
   AssetGenImage get princeton =>
       const AssetGenImage('assets/images/colleges/princeton.png');
+
+  /// File path: assets/images/colleges/purdue.png
+  AssetGenImage get purdue =>
+      const AssetGenImage('assets/images/colleges/purdue.png');
 
   /// File path: assets/images/colleges/rice.png
   AssetGenImage get rice =>
@@ -145,6 +177,14 @@ class $AssetsImagesCollegesGen {
   AssetGenImage get uchicago =>
       const AssetGenImage('assets/images/colleges/uchicago.png');
 
+  /// File path: assets/images/colleges/uci.png
+  AssetGenImage get uci =>
+      const AssetGenImage('assets/images/colleges/uci.png');
+
+  /// File path: assets/images/colleges/ucl.png
+  AssetGenImage get ucl =>
+      const AssetGenImage('assets/images/colleges/ucl.png');
+
   /// File path: assets/images/colleges/ucla.png
   AssetGenImage get ucla =>
       const AssetGenImage('assets/images/colleges/ucla.png');
@@ -157,6 +197,10 @@ class $AssetsImagesCollegesGen {
   AssetGenImage get ucsd =>
       const AssetGenImage('assets/images/colleges/ucsd.png');
 
+  /// File path: assets/images/colleges/umich.png
+  AssetGenImage get umich =>
+      const AssetGenImage('assets/images/colleges/umich.png');
+
   /// File path: assets/images/colleges/unc.png
   AssetGenImage get unc =>
       const AssetGenImage('assets/images/colleges/unc.png');
@@ -165,9 +209,21 @@ class $AssetsImagesCollegesGen {
   AssetGenImage get upenn =>
       const AssetGenImage('assets/images/colleges/upenn.png');
 
+  /// File path: assets/images/colleges/usc.png
+  AssetGenImage get usc =>
+      const AssetGenImage('assets/images/colleges/usc.png');
+
   /// File path: assets/images/colleges/vanderbilt.png
   AssetGenImage get vanderbilt =>
       const AssetGenImage('assets/images/colleges/vanderbilt.png');
+
+  /// File path: assets/images/colleges/virginia.png
+  AssetGenImage get virginia =>
+      const AssetGenImage('assets/images/colleges/virginia.png');
+
+  /// File path: assets/images/colleges/washu.png
+  AssetGenImage get washu =>
+      const AssetGenImage('assets/images/colleges/washu.png');
 
   /// File path: assets/images/colleges/yale.png
   AssetGenImage get yale =>
@@ -178,24 +234,31 @@ class $AssetsImagesCollegesGen {
         brown,
         bu,
         caltech,
+        cambridge,
         cmu,
         columbia,
         cornell,
         dartmouth,
         duke,
         emory,
+        florida,
         gatech,
+        georgetown,
         harvard,
         illinois,
+        imperial,
         jhu,
+        lse,
         madison,
         mit,
         northwestern,
         notredame,
         nyu,
-        penn,
+        ohio,
+        oxford,
         pineapple,
         princeton,
+        purdue,
         rice,
         rochester,
         stanford,
@@ -203,12 +266,18 @@ class $AssetsImagesCollegesGen {
         ucb,
         ucd,
         uchicago,
+        uci,
+        ucl,
         ucla,
         ucsb,
         ucsd,
+        umich,
         unc,
         upenn,
+        usc,
         vanderbilt,
+        virginia,
+        washu,
         yale
       ];
 }
