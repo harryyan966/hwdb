@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:bloc/bloc.dart';
 import 'package:client_tools/client_tools.dart';
 import 'package:excel/excel.dart' as ex;
-import 'package:file_saver/file_saver.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:hw_dashboard/l10n/l10n.dart';
 import 'package:tools/tools.dart';
@@ -434,8 +434,8 @@ class ScoreBoardCubit extends Cubit<ScoreBoardState> {
         final score = state.displayedScore(i, j);
         cell.value = score == null ? ex.TextCellValue(l10n.scoreBoardLabel_EmptyScore) : ex.DoubleCellValue(score);
         cell.cellStyle = baseStyle.copyWith(
-          backgroundColorHexVal: score == null ? ex.ExcelColor.fromInt(colorScheme.errorContainer.value) : null,
-          fontColorHexVal: score == null ? ex.ExcelColor.fromInt(colorScheme.onErrorContainer.value) : null,
+          backgroundColorHexVal: score == null ? ex.ExcelColor.fromInt(colorScheme.error.value) : null,
+          fontColorHexVal: score == null ? ex.ExcelColor.fromInt(colorScheme.onError.value) : null,
         );
       }
     }
@@ -450,9 +450,18 @@ class ScoreBoardCubit extends Cubit<ScoreBoardState> {
 
     try {
       // SAVE THE FILE TO THE DOWNLOAD FOLDER
-      await FileSaver.instance.saveFile(name: fileName, bytes: fileBytes);
+      final fileSaved = await saveFile(fileName, fileBytes, l10n);
 
-      emit(state.copyWith(status: PageStatus.good, event: Events.savedExcel));
+      if (fileSaved) {
+        emit(state.copyWith(
+          status: PageStatus.good,
+          event: Events.savedExcel,
+        ));
+      } else {
+        emit(state.copyWith(
+          status: PageStatus.good,
+        ));
+      }
     }
 
     // THE EXCEL FILE IS ALREADY OPENED OR CANNOT BE ACCESSED
@@ -465,4 +474,27 @@ class ScoreBoardCubit extends Cubit<ScoreBoardState> {
     // TODO: IMPLEMENT EXPORTING TO PDF
     // throw UnimplementedError();
   }
+}
+
+Future<bool> saveFile(String name, Uint8List bytes, AppLocalizations l10n) async {
+  try {
+    final filePath = await FilePicker.platform.saveFile(
+      dialogTitle: l10n.prompt_ChooseDownloadLocation,
+      lockParentWindow: true, // This ensures the little windows always comes before the large one.
+      fileName: name,
+    );
+
+    // If the user cancels the download
+    if (filePath == null) {
+      return false;
+    }
+
+    // Save file in the path chosen.
+    final file = File(filePath);
+    await file.writeAsBytes(bytes);
+
+    return true;
+  } on Exception {
+    return false;
+  }  
 }

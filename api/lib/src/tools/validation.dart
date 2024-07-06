@@ -13,7 +13,6 @@ abstract class Validate {
   }
 
   static void userPassword(String? password) {
-    // TODO: hash password
     if (password != null && password.length < 8) {
       throw InvalidField({'password': ValidationErrors.tooWeak()});
     }

@@ -129,7 +129,7 @@
     "scoreboardLabel_UnofficialFinalScore": "非官方期末成绩：{score}",
     "@scoreboardLabel_UnofficialFinalScore": {"placeholders": {"score": {"type": "String"}}},
     "scoreboardLabel_NoStudentsYet": "暂无学生",
-    "scoreBoardLabel_EmptyScore": "-",
+    "scoreBoardLabel_EmptyScore": "N/A",
 
     "coursesLabel_NoCoursesYet": "暂无课程",
 
@@ -164,8 +164,9 @@
     "prompt_EmptyRequest": "请求失败：无信息更改",
     "prompt_CreatedUser": "成功创建用户",
     "prompt_CreatedCourse": "成功创建课程",
-    "prompt_SavedExcel": "Excel已保存至默认下载文件夹",
+    "prompt_SavedExcel": "Excel已保存",
     "prompt_CannotSaveExcel": "无法保存Excel：请尝试关闭文件",
+    "prompt_ChooseDownloadLocation": "选择下载位置",
     "prompt_InsufficientAssignmentList": "无法提交最终成绩: 任务数量不足",
     "prompt_SessionExpired": "登录过期，请重新登录",
     "prompt_ServerFailure": "很抱歉，服务器出现问题，请与管理员联系",

@@ -1,4 +1,5 @@
 import 'package:client_tools/client_tools.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -44,9 +45,14 @@ class AppView extends StatelessWidget {
           rootNavigatorKey.currentContext!,
           dismissible: false,
           title: l10n.prompt_NetworkError,
-          content: ElevatedButton(
-            onPressed: () => rootNavigatorKey.currentContext!.nav.jump(LoginPage.route()),
-            child: Text(l10n.buttonLabel_Ok),
+          content: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () => rootNavigatorKey.currentContext!.nav.jump(LoginPage.route()),
+                child: Text(l10n.buttonLabel_Ok),
+              ),
+            ],
           ),
         );
         return true;

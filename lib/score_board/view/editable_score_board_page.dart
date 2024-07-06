@@ -37,6 +37,7 @@ class EditableScoreBoardView extends StatelessWidget {
 
     return MultiBlocListener(
       listeners: [
+        // IF THE EXCEL IS SAVED
         BlocListener<ScoreBoardCubit, ScoreBoardState>(
           listenWhen: (previous, current) => current.event == Events.savedExcel,
           listener: (context, state) {
@@ -45,12 +46,14 @@ class EditableScoreBoardView extends StatelessWidget {
             );
           },
         ),
+        // IF THE EXCEL CNANOT BE SAVED
         BlocListener<ScoreBoardCubit, ScoreBoardState>(
           listenWhen: (previous, current) => current.error == Errors.cannotSaveExcel,
           listener: (context, state) {
             showSimpleDialog(context, title: l10n.prompt_CannotSaveExcel);
           },
         ),
+        // IF THE AMOUNT OF ASSIGNMENTS IS NOT SUFFICIENT FOR PUBLISH
         BlocListener<ScoreBoardCubit, ScoreBoardState>(
           listenWhen: (previous, current) => current.error == Errors.insufficientAssignmentList,
           listener: (context, state) {

@@ -34,12 +34,6 @@ class ThemeColorSelector extends StatelessWidget {
                     onColorChanged: context.read<AppCubit>().setThemeColor,
                   ),
                 ),
-                actions: [
-                  ElevatedButton(
-                    child: Text(l10n.buttonLabel_Select),
-                    onPressed: () => Navigator.of(context).pop(),
-                  ),
-                ],
               ),
             ),
             child: Text(l10n.buttonLabel_Select),
