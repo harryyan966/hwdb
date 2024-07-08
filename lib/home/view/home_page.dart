@@ -75,7 +75,6 @@ class HomeView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(page.pageTitle),
-        actions: [Assets.images.appLogo.image()],
       ),
       body: IndexedStack(
         index: tabIndex,

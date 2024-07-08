@@ -10,8 +10,8 @@ dependencies:
   flutter:
     sdk: flutter
   const_date_time: ^1.1.0
+  encrypt_shared_preferences: ^0.7.1
   http: ^1.2.1
-  shared_preferences: ^2.2.2
 
   tools:
     path: ../tools

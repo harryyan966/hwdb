@@ -16,7 +16,7 @@ class ServerFailure implements Exception {}
 
 class HwdbHttpClient {
   // THIS HELPS CACHE DATA LOCALLY
-  final SharedPreferences _localCache;
+  final EncryptedSharedPreferences _localCache;
 
   // DETERMINES WHETHER WE USE HTTPS (INSTEAD OF HTTP)
   final bool _useHttps;
@@ -34,7 +34,7 @@ class HwdbHttpClient {
   static const remoteTokenKey = 'token';
 
   HwdbHttpClient({
-    required SharedPreferences localCache,
+    required EncryptedSharedPreferences localCache,
     String apiUrl = '62.234.5.130:8080',
     bool useHttps = false,
     bool debug = false,

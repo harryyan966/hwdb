@@ -25,6 +25,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.5.0"
+  asn1lib:
+    dependency: transitive
+    description:
+      name: asn1lib
+      sha256: "58082b3f0dca697204dbab0ef9ff208bfaea7767ea771076af9a343488428dda"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.5.3"
   async:
     dependency: transitive
     description:
@@ -201,6 +209,22 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.2.0"
+  encrypt:
+    dependency: transitive
+    description:
+      name: encrypt
+      sha256: "62d9aa4670cc2a8798bab89b39fc71b6dfbacf615de6cf5001fb39f7e4a996a2"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "5.0.3"
+  encrypt_shared_preferences:
+    dependency: "direct main"
+    description:
+      name: encrypt_shared_preferences
+      sha256: "3d763353e67b18d230ef2c6dbcb13ffea1a7a519f58a402113cd911beb7f9813"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.7.1"
   equatable:
     dependency: transitive
     description:
@@ -451,6 +475,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.1.8"
+  pointycastle:
+    dependency: transitive
+    description:
+      name: pointycastle
+      sha256: "4be0097fcf3fd3e8449e53730c631200ebc7b88016acecab2b0da2f0149222fe"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "3.9.1"
   pool:
     dependency: transitive
     description:
@@ -476,7 +508,7 @@ packages:
     source: hosted
     version: "1.2.3"
   shared_preferences:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: shared_preferences
       sha256: d3bbe5553a986e83980916ded2f0b435ef2e1893dfaa29d5a7a790d0eca12180
